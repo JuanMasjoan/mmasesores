@@ -1,0 +1,120 @@
+{% extends 'base.html' %}
+
+{% block title %}Polizas Vencidas{% endblock %}
+
+{% block header %} 
+<style>
+  .hidden-row {
+    display: none;
+}
+</style>    
+
+<script>
+function toggleRow(rowId) {
+  var row = document.getElementById(rowId);
+  row.classList.toggle('hidden-row');
+}
+function toggleRow2(rowId) {
+  var row = document.getElementById(rowId);
+  row.classList.toggle('hidden-row');
+}
+
+</script>
+
+<h1>Polizas Vencidas</h1>
+{% endblock %}
+
+{% block content %}
+<table>
+  <thead>
+    <tr>
+      <th>poliza</th>
+      <th>Titular</th>
+      <th>DNI</th>
+      <th>Cia</th>
+      <th>ramo</th>
+      <th>descripcion</th>
+      <th>baja</th>
+      <th>estado</th>
+      <th> Cambio de estado </th>
+      <th> Renovar Poliza </th>
+  
+    </tr>
+  </thead>
+  <tbody>
+    {% for tabla_renovaciones in tabla_renovaciones %}
+    <tr>
+      <td>{{ tabla_renovaciones.id_poliza }}</td>  
+      <td>{{ tabla_renovaciones.nom_apell }}</td>
+      <td>{{ tabla_renovaciones.id_dni }}</td>
+      <td>{{  tabla_renovaciones.cia }}</td>
+      <td>{{ tabla_renovaciones.ramo }}</td>
+      <td>{{ tabla_renovaciones.descrip }}</td>
+      <td>{{ tabla_renovaciones.fecha_baja }}</td>
+      <td>{{ tabla_renovaciones.estado_poliza }}</td>
+      <td>
+        <button onclick="toggleRow('row_{{ loop.index }}')">+</button>
+      </td>
+      <td>
+        <button onclick="toggleRow2('row_2{{ loop.index }}')">+</button>
+      </td>
+    </tr>
+    <form id="form" method="post" name="cambio_estado">
+    <tr id="row_{{ loop.index }}" class="hidden-row">
+      <td colspan="9">
+        <select name="valor_estado" >
+          <option value=""></option>
+          {% for valor in tabla_estado_poliza %}
+          {% if valor == tabla_renovaciones.estado_poliza %} 
+          <option value="{{ valor[0] }}" selected>{{ valor[1] }}</option>
+          {% else %} 
+          <option value="{{ valor[0] }}">{{ valor[1] }}</option>  
+          {% endif %}  
+          {% endfor %}  
+        </select>
+        <input type="hidden" name="num_pol" value="{{ tabla_renovaciones.id_poliza}}">
+        <button type="submit" id="valor_poliza" name="cambio_estado"> ACTUALIZAR</button>
+      </td>
+    </tr>
+    </form>
+    <form id="form" method="post">
+      <tr id="row_2{{ loop.index }}" class="hidden-row">
+        <td colspan="9">
+          <input name="num_pol_nuev" id="caja" placeholder="Numero de Poliza nuevo" type="number" required />
+          <input name="prima" id="caja" placeholder="Prima" type="number" required />
+          <select name="id_valor_estado" id="copito{{ loop.index }}">
+            <option value=""></option>
+            {% for valor in tabla_estado_poliza %} 
+            <option value="{{ valor[0] }}" selected>{{ valor[1] }}</option>
+            {% endfor %}  
+          </select>
+          <input type="hidden" name="id_dni"  value="{{ tabla_renovaciones.id_dni}}">
+          <input type="hidden" name="num_pol" value="{{ tabla_renovaciones.id_poliza}}">
+          <input type="hidden" name="id_cia" value="{{ tabla_renovaciones.id_cia }}">
+          <input type="hidden" name="id_productor" value="{{ tabla_renovaciones.id_productor }}">
+          <input type="hidden" name="id_ramo" value="{{ tabla_renovaciones.id_ramo }}">
+          <input type="hidden" name="fecha_baja" value="{{ tabla_renovaciones.fecha_baja }}">
+          <input type="hidden" name="descrip" value="{{ tabla_renovaciones.descrip }}">
+          <input type="hidden" name="refacturacion" value="{{ tabla_renovaciones.fecha_refacturacion }}">
+          <input type="hidden" name="id_forma_pago_clientes" value="{{ tabla_renovaciones.id_forma_pago_clientes }}">
+          <input type="hidden" name="cbu_tc" value="{{ tabla_renovaciones.cbu_tc}}">
+          <input type="hidden" name="cantidad_cuotas" value="{{ tabla_renovaciones.cantidad_cuotas }}">
+          <input type="hidden" name="id_ciclo_facturacion" value="{{ tabla_renovaciones.id_ciclo_facturacion}}"> 
+          <input type="hidden" name="sa_ajustado_dolar" value="{{ tabla_renovaciones.sa_ajustado_dolar}}">
+          <input type="hidden" name="poliza_renov" value="1">
+          <button type="submit" id="valor_poliza" name="btn_renovacion">Renovar</button>
+         
+         
+          <form action="{{ url_for('todo.alta_poliza') }}" method="POST">    
+            <button type="submit" id="boton" name="renovacion_poliza">
+              Renovar con distintas condicciones
+            </button>            
+        </form>
+        </td>
+      </tr>
+      </form>
+      
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

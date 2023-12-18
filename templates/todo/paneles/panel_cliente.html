@@ -1,0 +1,388 @@
+{% extends 'base.html' %}
+<h2> {% block title %} Panel Cliente {% endblock %} </h2>
+
+
+
+{% block header %} 
+<H1>Panel  De Cliente</H1>
+  
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        document.getElementById('toggleInputs').addEventListener('click', function() {
+            var inputForm = document.getElementById('inputForm');
+            inputForm.classList.toggle('hidden-row');
+        });
+
+        document.querySelectorAll('.toggle-row-button').forEach(function(button) {
+            button.addEventListener('click', function() {
+                var rowId = this.getAttribute('data-row-id');
+                toggleRow(rowId);
+            });
+        });
+    });
+
+    function toggleRow(rowId) {
+        var row = document.getElementById(rowId);
+        row.classList.toggle('hidden-row');
+        
+    }
+    
+    function toggleRow3(rowId) {
+        var row = document.getElementById(rowId);
+        row.classList.toggle('hidden-row');
+      }
+
+    function toggleRow2(rowId) {
+        var row = document.getElementById(rowId);
+        row.classList.toggle('hidden-row');
+      }
+
+      function toggleRow4(rowId) {
+        var row = document.getElementById(rowId);
+        row.classList.toggle('hidden-row');
+      }
+      
+</script>
+
+{% endblock %}
+
+{% block content %}
+{% for panel_cliente_info in panel_info%}
+<h2 id = 'TituloPrincipal'>{{ panel_cliente_info.titular }}</h2>
+
+<br>
+<br>
+
+<table>
+    <thead>
+        <tr>            
+            <button onclick="toggleRow('row_1 {{ loop.index }}')" >Modificacion Cliente</button>
+            </tr>
+            <th>APELLIDO Y NOMBRE </th>
+            <th>DNI</th>
+            <th>CUIT</th>
+            <th>REPRESENTANTE</th>
+            <th>ESTADO CIVIL</th>
+            <th>FECHA DE NACIMIENTO</th>
+            <th>DIR. PARTICULAR</th>
+            <th>DIR. LEGAL</th>
+            <th>CP</th>
+            <th>PROVINCIA</th>
+            <th>TELEFONO</th>
+            <th>EMAIL</th>
+            <th> OBSERVACIONES</th>
+        </tr>
+    </thead>
+    <tbody>  
+        <tr>
+ 
+            <input type="hidden" name="id_cliente" value="{{ panel_cliente_info.DNI }}">
+            <td>{{ panel_cliente_info.titular }}</td>
+            <td>{{ panel_cliente_info.DNI }}</td>
+            <td>{{ panel_cliente_info.cuit_cuil }}</td>
+            <td>{{ panel_cliente_info.representante}}</td>
+            <td>{{ panel_cliente_info.estado_civil }}</td>
+            <td>{{ panel_cliente_info.fecha_nac }}</td>
+            <td>{{ panel_cliente_info.dir_part }}</td>
+            <td>{{ panel_cliente_info.dir_legal}}</td>
+            <td>{{ panel_cliente_info.CP }}</td>
+            <td>{{ panel_cliente_info.provincia }}</td>
+            <td>{{ panel_cliente_info.tel }}</td>
+            <td>{{ panel_cliente_info.mail}}</td>
+            <td>{{ panel_cliente_info.observ }}</td>
+            
+        </tr>
+        <form id="inputForm2" class="hidden-row" method="POST">
+        <tr id="row_1 {{ loop.index }}" class="hidden-row">
+            <td colspan="9">
+                <input name ="dir_particular"type="text"  />
+                <button type="submit" name="btn_dir_particular" > Cambio de direccion Particular</button>
+                
+                <input name ="dir_legal"type="text"  />
+                <button type="submit" name="btn_dir_legal"> Cambio de direccion Legal</button>
+                
+                <input name="CP" type="number" pattern="[0-9]{4}" />
+                <button type="submit" name="btn_CP" > Codigo Postal</button>
+
+                <input name="Tel" type="number" placeholder=" nuevo numero de celular"/>
+                <button type="submit" name="btn_tel" > Celular</button>
+
+                <input name="mail" type="email" placeholder=" nuevo numero de Mail"/>
+                <button type="submit" name="btn_mail" > Email </button>
+
+        </form>
+    </tbody>
+</table>
+{% endfor %}
+<br>
+<h2> POLIZAS ACTIVAS </h2>
+<button id="toggleInputs">Poliza Nueva</button>
+<form id="inputForm" class="hidden-row" method="POST">
+    <tr id="row_2">
+        <input name="id_poliza" id="id_poliza" placeholder="Numero de Poliza" type="number" required />
+        <select name="id_productor">
+            <option value=""></option>
+            {% for valores in info_productor %}
+            {% if loop.index == 1 %}
+                <option value="{{ valores.id_productor }}" selected> {{ valores.productor }}</option>
+            {% else %}
+                <option value="{{ valores.id_productor }}" > {{ valores.productor }}</option>
+            {% endif %}
+            {% endfor %}
+        </select>
+        <select name="id_cia">
+            <option value=""></option>
+            {% for valor in info_cia %}
+            {% if loop.index == 1 %}
+                <option value="{{ valor.id_cia}}" selected> {{ valor.cia }}</option>
+            {% else %}
+                <option value="{{ valor.id_cia }}" > {{ valor.cia }}</option>
+            {% endif %}
+            {% endfor %}
+        </select>
+        <select name="id_ramo">
+            <option value=""></option>
+            {% for valor in info_ramo %}
+            {% if loop.index == 1 %}
+                <option value="{{ valor.id_ramo }}" selected> {{ valor.ramo }}</option>
+            {% else %}
+                <option value="{{ valor.id_ramo }}" > {{ valor.ramo }}</option>
+            {% endif %}
+            {% endfor %}
+        </select>
+        <label> Fecha de alta</label>
+        <input name="fecha_alta" id="fecha_alta" placeholder="Fecha de alta" type="date"/>
+        <label> Fecha de baja</label>
+        <input name="fecha_baja" id="fecha_baja" placeholder="Fecha de baja" type="date"/>
+        <label>fecha de refacturacion</label>
+        <input name="fecha_refacturacion" id="fecha_refacturacion" placeholder="fecha de refacturacion" type="date"/>
+        <select name="id_form_pago">
+            <option value=""></option>
+            {% for valor in info_form_pago_cl %}
+            {% if loop.index == 1 %}
+                <option value="{{ valor.id_forma_pago_clientes }}" selected> {{ valor.forma_pago_cliente }}</option>
+            {% else %}
+                <option value="{{ valor.id_forma_pago_clientes }}" > {{ valor.forma_pago_cliente }}</option>
+            {% endif %}
+            {% endfor %}
+        </select>
+        <input name="cbu_tc" id="cbu_tc" type="number" placeholder="Numero de cbu o Tarjeta"/>
+        <input name="cuotas" id="cuotas" type="number" placeholder="Cantidad de cuotas"/>
+        <select name="id_ciclo_facturacion">
+            <option value=""></option>
+            {% for valor in info_ciclo_fact %}
+            {% if loop.index == 1 %}
+                <option value="{{ valor.id_ciclo_facturacion }}" selected> {{ valor.ciclo_facturacion }}</option>
+            {% else %}
+                <option value="{{ valor.id_ciclo_facturacion }}" > {{ valor.ciclo_facturacion }}</option>
+            {% endif %}
+            {% endfor %}
+        </select>
+        <input name="prima" id="prima" type="number" placeholder="Prima Inicial"/>
+        <select name="id_estado_poliza" >
+            <option value=""></option>
+            {% for valor in info_estado_poliza %}
+            {% if loop.index == 1 %}
+                <option value="{{ valor.id_estado_poliza }}" selected>{{ valor.estado_poliza }}</option>
+            {% else %}
+                <option value="{{ valor.id_estado_poliza }}">{{ valor.estado_poliza }}</option>
+            {% endif %}
+            {% endfor %}
+        </select>
+        <label> Ajustado a dolar</label>
+        <input type="checkbox" name="ajustado_dolar" id="ajustado_dolar">
+        <br>
+        <textarea name="descripcion_poliza" rows="2" cols="10" placeholder="Descripcion de poliza"></textarea>
+        <button type="submit" name="btn_alta_poliza" > Confirmar </button>
+
+    </tr>
+</form>
+<table>
+    <thead>
+        <tr>
+            <th> + </th>
+            <th>POLIZA </th>
+            <th>TITULAR</th>
+            <th>COMPAñIA</th>
+            <th>RAMO</th>
+            <th>DESCRIPCION</th>
+            <th>FECHA DE ALTA</th>
+            <th>FECHA DE BAJA</th>
+            <th>ESTADO</th>
+            <th>FORMA PAGO</th>
+            <th>CUOTAS</th>
+            <th>FACTURACION</th>
+            <th>PRIMA</th>
+            <th>PORD AJUSTADOS</th>
+        </tr>
+    </thead>
+    
+    <tbody>
+        {% for panel_pol_activas in panel_pol_activas %}
+        <tr>
+            <td>
+                <button onclick="toggleRow('row_{{ loop.index }}')" data-row-id="row_{{ loop.index }}">+</button>
+                </td>
+            <td>{{ panel_pol_activas.id_poliza }}</td>
+            <td>{{ panel_pol_activas.nom_apell}}</td>
+            <td>{{ panel_pol_activas.cia }}</td>
+            <td>{{ panel_pol_activas.ramo }}</td>
+            <td>{{ panel_pol_activas.descrip }}</td>                
+            <td>{{ panel_pol_activas.fecha_alta }}</td>
+            <td>{{ panel_pol_activas.fecha_baja }}</td>
+            <td>{{ panel_pol_activas.estado_poliza }}</td>
+            <td>{{ panel_pol_activas.forma_pago_cliente}}</td>
+            <td>{{ panel_pol_activas.cantidad_cuotas}}</td>
+            <td>{{ panel_pol_activas.ciclo_facturacion }}</td>
+            <td>{{ panel_pol_activas.prima }}</td>
+            <td>
+                <input type="checkbox" {% if panel_pol_activas.sa_ajustado_dolar %}checked{% endif %}>
+            </td>
+            <tr id="row_{{ loop.index }}" class="hidden-row">
+                <td colspan="9">
+                    <form id="form" method="POST">
+                        <input name ="cambio_prima"type="text" pattern="\d+(\.\d{2})?" />
+                        <button type="submit" name="btn_cambio_prima" value="{{ panel_pol_activas.id_poliza }}"> Cambio Prima </button>
+                        <br>
+                        <select name="id_estado_poliza" >
+                            <option value=""></option>
+                            {% for valor in info_estado_poliza %}
+                            {% if loop.index == 1 %}
+                                <option value="{{ valor.id_estado_poliza }}" selected>{{ valor.estado_poliza }}</option>
+                            {% else %}
+                                <option value="{{ valor.id_estado_poliza }}">{{ valor.estado_poliza }}</option>
+                            {% endif %}
+                            {% endfor %}
+                        </select>
+                        <button type="submit" name="btn_cambio_estado" value="{{ panel_pol_activas.id_poliza }}"> Cambio estado </button>
+                        <br>
+                        <input name ="descripcion" type="text"/>
+                        <button type="submit" name="btn_descripcion" value="{{ panel_pol_activas.id_poliza }}"> Cambio Descripcion </button>
+                        <br>
+                        <select name="form_pago_cl">
+                            <option value=""></option>
+                            {% for valor in info_form_pago_cl %}
+                            {% if loop.index == 1 %}
+                                <option value="{{ valor.id_forma_pago_clientes }}" selected> {{ valor.forma_pago_cliente }}</option>
+                            {% else %}
+                                <option value="{{ valor.id_forma_pago_clientes }}" > {{ valor.forma_pago_cliente }}</option>
+                            {% endif %}
+                            {% endfor %}
+                        </select>
+                        <button type="submit" name="btn_form_pago_cl" value="{{ panel_pol_activas.id_poliza }}"> Cambio estado </button>
+                        <br>
+                    </form>
+                    <button onclick="toggleRow('row_4{{ loop.index }}')" data-row-id="row_{{ loop.index }}">Nvo</button>
+                </td>
+            </tr>
+        </tr>
+        <form id="form4" method="POST">
+            <tr id="row_4{{ loop.index }}" class="hidden-row">
+                <td colspan="12">
+                    <input name="numero_siniestro" placeholder="n stro -" type="number"/>
+                    <input name="id_poliza_stro" type="hidden" value="{{ panel_pol_activas.id_poliza }}"></input>
+                    <select name="tipo_siniestro_" >
+                        <option value=""></option>
+                        {% for valor in tipo_siniestro %}
+                        {% if loop.index == 1 %}
+                            <option value="{{ valor.id_tipo_siniestro }}" selected>{{ valor.tipo_siniestro }}</option>
+                        {% else %}
+                            <option value="{{ valor.id_tipo_siniestro }}">{{ valor.tipo_siniestro }}</option>
+                        {% endif %}
+                        {% endfor %}
+                    </select>
+                    <select name="estado_siniestro_" >
+                        <option value=""></option>
+                        {% for valor in estado_siniestro %}
+                        {% if loop.index == 1 %}
+                            <option value="{{ valor.id_estado_siniestro }}" selected>{{ valor.estado_siniestro }}</option>
+                        {% else %}
+                            <option value="{{ valor.id_estado_siniestro }}">{{ valor.estado_siniestro }}</option>
+                        {% endif %}
+                        {% endfor %}
+                    </select>`
+                    <input name="fecha_siniestro"  type="date" required/>
+                    <input name="hora_siniestro"  type="time" required/>
+                    <input name="ubicacion_siniestr"  type="text" placeholder='ubicacion del siniestro...' required/>
+                    <br>
+                    <textarea name="descripcion_siniestro" rows="2" cols="25" placeholder="Descripcion del siniestro"></textarea>
+                    <textarea name="comentarios_siniestro" rows="2" cols="25" placeholder="Comentarios para tener en cuenta"></textarea>
+                    <button type="submit" name="btn_alta_stro" >Alta Siniestro </button>
+                </td>
+            </tr>
+            </tr>
+        </form>
+        {% endfor %}
+    </tbody>
+</table>
+<br>
+<h2> POLIZAS NO VIGENTES </h2>
+<table>
+    <thead>
+        <tr>
+            <th>POLIZA </th>
+            <th>TITULAR</th>
+            <th>COMPAñIA</th>
+            <th>RAMO</th>
+            <th>DESCRIPCION</th>
+            <th>FECHA DE ALTA</th>
+            <th>FECHA DE BAJA</th>
+            <th>ESTADO</th>
+        </tr>
+    </thead>
+    
+    <tbody>
+        {% for panel_pol_historicas in panel_pol_historicas %}
+        <tr>
+            <td>{{ panel_pol_historicas.id_poliza }}</td>
+            <td>{{ panel_pol_historicas.nom_apell}}</td>
+            <td>{{ panel_pol_historicas.cia }}</td>
+            <td>{{ panel_pol_historicas.ramo }}</td>
+            <td>{{ panel_pol_historicas.descrip }}</td>                
+            <td>{{ panel_pol_historicas.fecha_alta }}</td>
+            <td>{{ panel_pol_historicas.fecha_baja }}</td>
+            <td>{{ panel_pol_historicas.estado_poliza }}</td>
+            
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<h2> SINIESTRO </h2>
+<br>
+
+
+<table>
+
+    </form>
+    
+        <tr>
+        </form>
+        <th>Numero de Stro</th>
+        <th>Poliza</th>
+        <th>Titular</th>
+        <th>cia</th>
+        <th>Ramo</th>
+        <th>Tipo De siniestro</th>
+        <th>Descripcion</th>
+        <th>Estado de Siniestro</th>
+        <th>Comentarios</th>
+        <th>Ultima modificacion</th>
+    </tr>
+    {% for panel_stro in panel_stro %}
+    <tr>
+        <td>{{ panel_stro.numero_siniestro }}</td>
+        <td>{{ panel_stro.id_poliza }}</td>
+        <td>{{ panel_stro.id_dni }}</td>
+        <td>{{ panel_stro.cia }}</td>
+        <td>{{ panel_stro.ramo }}</td>
+        <td>{{ panel_stro.tipo_siniestro }}</td>
+        <td>{{ panel_stro.descripcion }}</td>
+        <td>{{ panel_stro.estado_siniestro }}</td>
+        <td>{{ panel_stro.Comen_stro }}</td>
+        <td>{{ panel_stro.siniestro_ultimo_update }}</td>
+    </tr>
+
+    {% endfor %}
+</table>
+{% endblock %}

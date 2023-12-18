@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block header %} 
+<h2> {% block title %} INICIO {% endblock %} </h2>
+{% endblock %}
+
+
+{% block content %}
+<a class="action" href="{{ url_for('pan_cl.buscador_dni') }}"> Panel Cliente   </a>
+<br>
+<br>
+<a class="action" href="{{ url_for('pan_diario.pan_diario') }}"> Panel Diario</a>
+
+<br>
+<br>
+<a class="action" href="{{ url_for('static', filename='contacto_clientes.exe') }}"> Panel Diario</a>
+
+<br>
+
+<a class="action" href="{{ url_for('contabilidad.contabilidad') }}"> Busqueda Especifica</a>
+{% endblock %}  
+

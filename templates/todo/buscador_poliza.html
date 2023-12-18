@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+<h2> {% block title %} Buscador Poliza{% endblock %} </h2>
+
+
+{% block header %} 
+<H1> Buscador Poliza</H1>
+{% endblock %}
+
+{% block content %}
+<form method= "POST">
+    <select name="buscador_tipo" id="buscador_tipo">
+        <option value="id_dni">DNI</option>
+        <option value="id_poliza">Poliza</option>
+        <option value="nom_apell">APELLIDO O NOMBRE</option>
+        <option value="descrip">DESCRIPCION</option>
+    </select>
+    <input type="text" name="buscador_texto" placeholder="palabra clave">
+    <button type="submit" name="btn_buscar_tipo">Buscar</button>
+    <label> Mostrar Todas</label>
+    <input type="checkbox" name="ch_most_todas" >
+    <br>
+    <br>
+    <br>
+    <table>
+        <thead>
+            <tr>
+                <th>POLIZA </th>
+                <th>DNI</th>
+                <th>TITULAR</th>
+                <th>COMPAñIA</th>
+                <th>RAMO</th>
+                <th>DESCRIPCION</th>
+                <th>FECHA DE ALTA</th>
+                <th>FECHA DE BAJA</th>
+                <th>ESTADO</th>
+                <th>FORMA PAGO</th>
+                <th>CUOTAS</th>
+                <th>FACTURACION</th>
+                <th>PRIMA</th>
+                <th>PORD AJUSTADOS</th>
+            </tr>
+        </thead>
+        
+        
+        <tbody>
+            {% for tabla_cons_poliza in tabla_cons_poliza_amostrar%}
+            <tr>
+                <td>{{ tabla_cons_poliza.id_poliza }}</td>
+                <td>{{ tabla_cons_poliza.id_dni }}</td>
+                <td>{{ tabla_cons_poliza.nom_apell}}</td>
+                <td>{{ tabla_cons_poliza.cia }}</td>
+                <td>{{ tabla_cons_poliza.ramo }}</td>
+                <td>{{ tabla_cons_poliza.descrip }}</td>                
+                <td>{{ tabla_cons_poliza.fecha_alta }}</td>
+                <td>{{ tabla_cons_poliza.fecha_baja }}</td>
+                <td>{{ tabla_cons_poliza.estado_poliza }}</td>
+                <td>{{ tabla_cons_poliza.forma_pago_cliente}}</td>
+                <td>{{ tabla_cons_poliza.cantidad_cuotas}}</td>
+                <td>{{ tabla_cons_poliza.ciclo_facturacion }}</td>
+                <td>{{ tabla_cons_poliza.prima }}</td>
+                <td>
+                    <input type="checkbox" {% if tabla_cons_poliza.sa_ajustado_dolar %}checked{% endif %}>
+                </td>
+                
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    </form>
+    {% endblock %}

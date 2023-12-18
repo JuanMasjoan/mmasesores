@@ -1,0 +1,34 @@
+
+{% extends 'base.html' %}
+
+{% block header %} 
+<h2> {% block title %} Cargar Factura AFIP{% endblock %} </h2>
+{% endblock %}
+
+{% block content %} 
+
+<form method="POST" enctype="multipart/form-data">
+    <input type="file" name="factura_pdf" accept=".pdf" required>
+    <select name="tipo_factura" >
+        <option value="A">A</option>
+        <option value="B">B</option>
+        <option value="C">C</option>
+    </select>
+    <select name="id_cia">
+        <option value=""></option>
+        {% for valor in valores_cia %}
+        {% if loop.index == 1 %}
+            <option value="{{ valor[0] }}" selected> {{ valor[1] }}</option>
+        {% else %}
+            <option value="{{ valor[0] }}" > {{ valor[1] }}</option>
+            {% endif %}
+            {% endfor %}
+    </select>
+    <label> cobrada </label>
+    <input type="checkbox" name="ajustado_dolar" id="ajustado_dolar">
+    <input type="submit" value="Procesar">
+</form>
+
+
+
+{% endblock %}

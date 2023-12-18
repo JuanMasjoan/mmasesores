@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block header %} 
+    <h2> {% block title %} Tareas Diarias {% endblock %} </h2>
+{% endblock %}
+
+
+{% block content %}
+<body>
+    <div class="container">
+        <div class="add-task">
+        <!-- cuadro agregar tarea -->
+        <form method="POST" action="{{ url_for('flsk_sql3_1.tareas_diarias') }}" name = "agregar_tarea" class="add-task">
+        <select name="titulo" >
+            <option value=""></option>
+            {% for tipo_tareas in tipo_tareas %} 
+                <option value="{{ tipo_tareas[0] }}" selected>{{ tipo_tareas[1] }}</option>
+            {% endfor %}
+        <input type="text" name="descripcion" placeholder="Descripción de la tarea" required>
+        <input type="date" name="fecha_actual"  value={{ fecha_actual.strftime('%Y-%m-%d') }} required>
+        <input type="time" name="duracion" placeholder="Duración" value="00:10" required>
+        <button type="submit" class="add-button" name="agregar_tarea">Agregar Tarea</button>
+        </form>
+        <h2 class="current-date">{{ fecha_actual.strftime('%Y-%m-%d') }} </h2>
+        <br>
+        <fieldset>
+            <div class="date-navigation">
+            <form method="POST" action="{{ url_for('flsk_sql3_1.tareas_diarias') }}">
+                <label for="fecha_seleccionada">Buscar por fecha:</label>
+                <input type="date" name="fecha_seleccionada" id="fecha_seleccionada" required>
+                <button type="submit" class="search-button">Buscar</button>
+                <label title="Hora de inicio de actividades">Hora de inicio de actividades</label>
+                <input type="time" name="hora_comienzo" placeholder="hora de inicio de actividades" value="08:30">
+                <br>
+                <button type="submit" class="navigation-button" name = "fecha_anterior"> -] </button>
+                <label class="current-date">Fecha_seleccionada:{{ fecha_actual.strftime('%Y-%m-%d')}} </label>
+                <button type="submit" class="navigation-button"> [- </button>
+            </form>
+            </div>
+        </fieldset>  	
+        <!-- Cuadro para mostrar las tareas -->
+        <div class="tasks">
+            <fieldset>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Realizada </th>
+                            <th>Tarea</th>
+                            <th>descripcion</th>
+                            <th>duracion</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for tarea in tareas %}
+                        <tr>
+                            <td><input type="checkbox" name="realizada" {% if tarea[4] == 1 %}checked{% endif %}></td>
+                            <div class="task-details">
+                                <td><h3>{{ tarea[1] }}</h3></td>   
+                                <td><p>{{ tarea[2] }}</p></td>
+                                <td><span>Duración: {{ tarea[3] }} horas</span></td>
+                            </div>
+                            <!-- NO ESTA FUNCIONANDO EL CAMBIO DE COLOR, POR ESO ESTA EL BOTON Y EL CHECKBOX-->
+                            <form method="POST" action="{{ url_for('flsk_sql3_1.completar_tarea', tarea_id=tarea[0]) }}">
+                                <td><button type="submit" class="edit-button">Completar</button></td>
+                            </form>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </fieldset>
+        </div>
+</body>
+
+{% endblock %}  
+

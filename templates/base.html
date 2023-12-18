@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<title>{% block title %}{% endblock %}</title>
+<link rel = "stylesheet" href = "{{ url_for ('static', filename = 'style.css') }}">
+<nav>
+    <ul>
+        {% if g.user %}
+            <li><span> {{ g.user ['username']}}</span></li>
+            <li><a href = "{{ url_for ('auth.logout') }}">Cerrar sesion</a> </li>
+            <li><a class="action" href="{{ url_for('todo.index')}}"> Inicio</a> </li>
+        {% else %}
+            <li><a href="{{ url_for ('auth.register') }}">Registrarse</a></li>
+            <li><a href="{{ url_for ('auth.login') }}">Iniciar sesion</a></li>
+        {% endif %}
+    </ul>
+</nav>
+<section class = "content">
+    <header>
+        {% block header %}{% endblock %}
+    </header>
+    {% with msj = get_flashed_messages() %}
+    {% if msj %}
+        <ul class="messages">
+            {% for msje in msj %}
+                <li>{{ msje }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    {% endwith %}
+    {% block content %}{% endblock %}
+</section>

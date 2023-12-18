@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+<h2> {% block title %} Nuevo cliente por captar{% endblock %} </h2>
+
+{% block header %}     
+    <H1> Cliente nuevo para Agenda de clientes </H1>
+{% endblock %}
+    
+    
+{% block content %}
+<body>
+    <form action="{{ url_for('todo.nv_ag_cartera') }}" method="POST">
+        <table>
+            <tr>        
+                <th>TG ID DNI</th>
+                <th>TG Nombre Apellido</th>
+                <th>TG Prod Acaptar</th>
+                <th>TG Prod Logrados</th>
+                <th>TG Comentarios</th>
+                <th>TG Estado Contacto</th>
+                <th>TG COMPLETED</th>
+            </tr>
+            <tr>
+                <select name="id_productor">
+                    <option value=""></option>
+                    {% for valor in valores_productor %}
+                    {% if loop.index == 1 %}
+                        <option value="{{ valor[0] }}" selected> {{ valor[1] }}</option>
+                    {% else %}
+                        <option value="{{ valor[0] }}" > {{ valor[1] }}</option>
+                    {% endif %}
+                    {% endfor %}
+                </select>
+                <td><input name="tg_id_dni" id="tg_id_dni" type="tg_number"/></td>
+                <td><input name="tg_nombre_apellido" id="tg_nombre_apellido"/></td>
+                <td><input name="tg_prod_acaptar" id="tg_prod_acaptar" /></td>
+                <td><input name="tg_prod_logrados" id="tg_prod_logrados" /></td>
+                <td><input name="tg_comentarios" id="tg_comentarios" /></td>
+                <td><input name="tg_estado_contacto" id="tg_estado_contacto" /></td>
+                <td>
+                    <input type="checkbox" name="tg_COMPLETED" id="tg_COMPLETED">
+                </td>
+        </table>    
+            <button type="submit" id="nv_agregar_nuevo" name="nv_agregar_nuevo">
+            Agregar Nuevo
+            </button>            
+    </form>
+</body>
+{% endblock %}

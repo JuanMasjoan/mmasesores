@@ -1,0 +1,23 @@
+
+{% extends 'base.html' %}
+
+{% block header %} 
+<h2> {% block title %} Mora {% endblock %} </h2>
+{% endblock %}
+
+{% block content %} 
+
+<form method="POST" enctype="multipart/form-data">
+    <input type="file" name="carga_mora" accept=".csv" required>
+    <select name="tipo_factura" >
+        <option value="A">Mapfre</option>
+        <option value="B">B</option>
+        <option value="C">C</option>
+    </select>
+
+    <input type="submit" value="Procesar">
+</form>
+
+
+
+{% endblock %}

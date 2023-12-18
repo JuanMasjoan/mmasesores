@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+<h2> {% block title %} Modificacion estado poliza{% endblock %} </h2>
+
+
+{% block header %} 
+<style>
+    .hidden-row {
+      display: none;
+  }
+</style>    
+  
+<script>
+    // fx mostrar/ocultar filas
+function toggleRow(rowIndex) {
+    var row = document.getElementById('row_' + rowIndex);
+    row.classList.toggle('hidden-row');
+}
+
+  
+</script>
+
+<H1> Modificacion Estado Poliza</H1>
+{% endblock %}
+
+{% block content %}
+<form method= "POST" action="{{ url_for('todo.mod_est_pol')}}">
+    <!-- opciones de primera busqueda con btn y cuadro -->    
+    <select name="buscador_tipo" id="buscador_tipo">
+        <option value="id_dni">DNI</option>
+        <option value="id_poliza">Poliza</option>
+        <option value="nom_apell">APELLIDO O NOMBRE</option>
+        <option value="descrip">DESCRIPCION</option>
+    </select>
+    <input type="text" name="buscador_texto" placeholder="palabra clave">
+    <button type="submit" name="btn_buscar_tipo">Buscar</button>
+
+    <br>
+    <br>
+    <br>
+    <table>
+        <thead>
+            <tr>
+                <th> + </th>
+                <th>POLIZA </th>
+                <th>DNI</th>
+                <th>TITULAR</th>
+                <th>COMPAñIA</th>
+                <th>RAMO</th>
+                <th>DESCRIPCION</th>
+                <th>FECHA DE BAJA</th>
+                <th>ESTADO</th>
+            </tr>
+        </thead>
+        
+        
+        <tbody>
+            {% for tabla_mod_est_pol in tabla_mod_est_pol%}
+            {% set counter = loop.index0 %}
+            <tr>
+                <td>
+                    <button type="button" onclick="toggleRow('{{ loop.index }}')" >+</button>
+                    
+                </td> 
+                <td>{{ tabla_mod_est_pol.id_poliza }}</td>
+                <td>{{ tabla_mod_est_pol.id_dni }}</td>
+                <td>{{ tabla_mod_est_pol.nom_apell}}</td>
+                <td>{{ tabla_mod_est_pol.cia }}</td>
+                <td>{{ tabla_mod_est_pol.ramo }}</td>
+                <td>{{ tabla_mod_est_pol.descrip }}</td>                
+                <td>{{ tabla_mod_est_pol.fecha_baja }}</td>
+                <td>{{ tabla_mod_est_pol.estado_poliza }}</td>
+                
+            </tr>
+            <tr id="row_{{ loop.index }}" class="hidden-row">
+                <td colspan="9">
+                    <form method="POST" action="{{ url_for('todo.mod_est_pol') }}">
+                        <select name="id_estado_poliza" >
+                            <option value=""></option>
+                            {% for datos in val_t_est_mora %}
+                            {% if loop.index == 1 %}
+                                <option value="{{ datos[0] }}" selected>{{ datos[1] }}</option>
+                            {% else %}
+                                <option value="{{ datos[0] }}">{{ datos[1] }}</option>
+                            {% endif %}
+                            {% endfor %}
+                        </select>
+                        <input type="hidden" name="num_pol" value="{{ tabla_mod_est_pol.id_poliza }}">
+                        <button type="submit" name="btn_mod_pol" value="10">mora</button>
+                        <button type="submit" name="btn_mod_pol" value="6">renovar</button>
+                        <button type="submit" name="btn_mod_pol_">Actualizar</button>
+                    </form>
+                </td>
+            </tr> 
+        {% endfor %}
+        </tbody>
+    </table>
+    </form>
+{% endblock %}

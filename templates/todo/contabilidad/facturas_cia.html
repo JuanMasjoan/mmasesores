@@ -1,0 +1,121 @@
+
+{% extends 'base.html' %}
+
+{% block header %} 
+<h2> {% block title %} Facturas{% endblock %} </h2>
+{% endblock %}
+
+{% block content %} 
+<body>
+    <h1>Facturas Pendientes</h1>
+    <table border="1">
+        <tr>
+            <th>Factura</th>
+            <th>Tipo</th>
+            <th>Titular_Factura</th>
+            <th>Pto_Venta</th>
+            <th>Fecha_Factura</th>
+            <th>Mes</th>
+            <th>Perido</th>
+            <th>Cia</th>
+            <th>Facturado</th>
+            <th>Retenciones</th>
+            <th>Depositada</th>
+        </tr>
+        {% for fact_pend in fact_pend %}
+        <tr>
+            <td>{{ fact_pend.Factura }} </td>
+            <td>{{ fact_pend.Tipo }} </td>
+            <td>{{ fact_pend.titular_factura }} </td>
+            <td>{{ fact_pend.Pto_venta }} </td>
+            <td>{{ fact_pend.fecha_factura }} </td>
+            <td>{{ fact_pend.Mes }} </td>
+            <td>{{ fact_pend.perido }} </td>
+            <td>{{ fact_pend.cia }} </td>
+            <td> $ {{ fact_pend.Facturado }} </td>
+            <td> $ {{ fact_pend.Retenciones }} </td>
+            <td>
+                <input type="checkbox" {% if fact_pend.Depositada %}checked{% endif %}>
+            </td>
+            <form method="post" action="{{ url_for('contabilidad.facturas_cia') }}">
+            <td><button type="submit" name="btn_pagado" value={{fact_pend.Factura}}>Pagado</button></td>
+            </form>
+            {% endfor %}
+        </tr>
+    </table>
+    <h1>Facturas del ultimo Mes</h1> 
+    <table>
+        <tr>
+            <th>Cia</th>
+            <th>Total Facturado</th>
+            <th>Total Retenciones</th>
+            <th>Total Cobrado</th>
+
+        </tr>
+        {% for rest_ult_mes in rest_ult_mes %}
+        <tr>
+            <td>{{ rest_ult_mes.cia }}</td>
+            <td> $ {{ rest_ult_mes.Total_Facturado }}</td>
+            <td> $ {{ rest_ult_mes.Total_Retenciones }}</td>
+            <td> $ {{ rest_ult_mes.Diferencia }}</td>
+
+        </tr>
+        {% endfor %}
+    </table>
+
+    <h1>Facturas del ultimo Año</h1> 
+    <table>
+        <tr>
+            <th>Cia</th>
+            <th>Total Facturado</th>
+            <th>Total Retenciones</th>
+            <th>Total Cobrado</th>
+
+        </tr>
+        {% for rest_ult_ano in rest_ult_ano %}
+        <tr>
+            <td>{{ rest_ult_ano.cia }}</td>
+            <td> $ {{ rest_ult_ano.Total_Facturado }}</td>
+            <td> $ {{ rest_ult_ano.Total_Retenciones }}</td>
+            <td> $ {{ rest_ult_ano.Bruto }}</td>
+
+        </tr>
+        {% endfor %}
+    </table>
+    <h1>Todas Las Facturas</h1>
+    <table border="1">
+        <tr>
+            <th>Factura</th>
+            <th>Tipo</th>
+            <th>Titular_Factura</th>
+            <th>Pto_Venta</th>
+            <th>Fecha_Factura</th>
+            <th>Mes</th>
+            <th>Perido</th>
+            <th>Cia</th>
+            <th>Facturado</th>
+            <th>Retenciones</th>
+            <th>Depositada</th>
+        </tr>
+        {% for fact in fact %}
+        <tr>
+            <td>{{ fact.Factura }} </td>
+            <td>{{ fact.Tipo }} </td>
+            <td>{{ fact.titular_factura }} </td>
+            <td>{{ fact.Pto_venta }} </td>
+            <td>{{ fact.fecha_factura }} </td>
+            <td>{{ fact.Mes }} </td>
+            <td>{{ fact.perido }} </td>
+            <td>{{ fact.cia }} </td>
+            <td> $ {{ fact.Facturado }} </td>
+            <td> $ {{ fact.Retenciones }} </td>
+            <td>
+                <input type="checkbox" {% if fact.Depositada %}checked{% endif %}>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+{% endblock %}
+
+

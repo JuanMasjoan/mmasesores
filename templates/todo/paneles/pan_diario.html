@@ -1,0 +1,399 @@
+{% extends 'base.html' %}
+
+{% block title %}Mora{% endblock %}
+
+{% block header %} 
+<style>
+  .hidden-row {
+    display: none;
+}
+</style>    
+
+<script>
+  function toggleRow(rowId) {
+    var row = document.getElementById(rowId);
+    row.classList.toggle('hidden-row');
+  }
+
+  function toggleRow3(rowId) {
+      var row = document.getElementById(rowId);
+      row.classList.toggle('hidden-row');
+    }
+  function toggleRow2(rowId) {
+      var row = document.getElementById(rowId);
+      row.classList.toggle('hidden-row');
+    }
+
+    
+  function toggleRow4(rowId) {
+    var row = document.getElementById(rowId);
+    row.classList.toggle('hidden-row');
+  }
+  function toggleRow5(rowId) {
+    var row = document.getElementById(rowId);
+    row.classList.toggle('hidden-row');
+  }
+  function toggleRow6(rowId) {
+    var row = document.getElementById(rowId);
+    row.classList.toggle('hidden-row');
+  }
+  function toggleRow7(rowId) {
+    var row = document.getElementById(rowId);
+    row.classList.toggle('hidden-row');
+  }
+  // Función para formatear fechas en etiquetas
+  function formatearFechas() {
+    // Obtener todas las etiquetas <label>
+    const etiquetas = document.querySelectorAll('label');
+
+    etiquetas.forEach((etiqueta) => {
+      const textoEtiqueta = etiqueta.innerText;
+
+      // Verificar si el texto de la etiqueta contiene una fecha en el formato 'AAAA-MM-DD'
+      const regexFecha = /\d{4}-\d{2}-\d{2}/;
+      const fechaEncontrada = textoEtiqueta.match(regexFecha);
+
+      if (fechaEncontrada) {
+        // Dividir la fecha en año, mes y día
+        const partesFecha = fechaEncontrada[0].split('-');
+        const año = partesFecha[0];
+        const mes = partesFecha[1];
+        const día = partesFecha[2];
+
+        // Reorganizar la fecha en el formato deseado (DD-MM-AAAA)
+        const fechaFormateada = `${día}-${mes}-${año}`;
+
+        // Reemplazar la fecha original con la fecha formateada
+        const nuevoTexto = textoEtiqueta.replace(regexFecha, fechaFormateada);
+        etiqueta.innerText = nuevoTexto;
+      }
+    });
+  }
+  window.onload = formatearFechas;
+  function formatearFechasEnTabla() {
+    const celdas = document.querySelectorAll('td');
+
+    celdas.forEach((celda) => {
+      const textoCelda = celda.innerText;
+
+      const regexFecha = /\d{4}-\d{2}-\d{2}/;
+      const fechaEncontrada = textoCelda.match(regexFecha);
+
+      if (fechaEncontrada) {
+        const partesFecha = fechaEncontrada[0].split('-');
+        const año = partesFecha[0];
+        const mes = partesFecha[1];
+        const día = partesFecha[2];
+
+        const fechaFormateada = `${día}-${mes}-${año}`;
+        celda.innerText = textoCelda.replace(regexFecha, fechaFormateada);
+      }
+    });
+  }
+  window.onload = formatearFechasEnTabla;
+
+</script>
+
+{% endblock %}
+
+{% block content %}
+<h1>Polizas en mora a la fecha</h1>
+<table>
+  <thead>
+    <tr>
+      <th> + </th>
+      <th>poliza</th>
+      <th>cia</th>
+      <th>ramo</th>
+      <th>cliente</th>
+      <th>descripcion</th>
+      <th>dni</th>
+      <th>baja</th>
+      <th>estado</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for poliza_mora in vw_mora %}
+    <tr>
+      <td>
+        <button onclick="toggleRow('row_{{ loop.index }}')">+</button>
+      </td>
+      <td>{{ poliza_mora.poliza }}</td>  
+      <td>{{ poliza_mora.cia }}</td>
+      <td>{{ poliza_mora.ramo }}</td>
+      <td>{{ poliza_mora.cliente }}</td>
+      <td>{{ poliza_mora.descripcion }}</td>
+      <td>{{ poliza_mora.dni }}</td>
+      <td>{{ poliza_mora.Baja }}</td>
+      <td>{{ poliza_mora.Estado }}</td>
+    </tr>
+    <form id="form1" method="POST">
+    <tr id="row_{{ loop.index }}" class="hidden-row">
+      <td colspan="9">
+        <select name="valor_estado" id="copito{{ loop.index }}">
+          <option value=""></option>
+            {% for valor in info_panel_diario %}
+              <option value="{{ valor.id_estado }}" >{{ valor.estado }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit" id="btn_cambio_estado" name="btn_cambio_estado" value="{{ poliza_mora.poliza}}">ACTUALIZAR </button>
+        <button type="submit" name="redirect_panel_clientes"  value="{{ poliza_mora.dni }}" >Ir a Panel Cliente</button>
+      </td>
+    </tr>
+    </form>
+    {% endfor %}
+  </tbody>
+</table>
+<br>
+<h2> Poliza Vencida</h2>
+<table>
+  <thead>
+    <tr>
+      <th> Cambio de estado </th>
+      <th> Renovar Poliza </th>
+      <th>poliza</th>
+      <th>Titular</th>
+      <th>DNI</th>
+      <th>Cia</th>
+      <th>ramo</th>
+      <th>descripcion</th>
+      <th>baja</th>
+      <th>estado</th>
+  
+    </tr>
+  </thead>
+  <tbody>
+    {% for tabla_renovaciones in tabla_renovaciones %}
+    <tr>
+      <td>
+        <button onclick="toggleRow3('row_3{{ loop.index }}')">+</button>
+      </td>
+      <td>
+        <button onclick="toggleRow2('row_2{{ loop.index }}')">+</button>
+      </td>
+      <td>{{ tabla_renovaciones.poliza }}</td>  
+      <td>{{ tabla_renovaciones.cliente }}</td>
+      <td>{{ tabla_renovaciones.dni }}</td>
+      <td>{{ tabla_renovaciones.cia }}</td>
+      <td>{{ tabla_renovaciones.ramo }}</td>
+      <td>{{ tabla_renovaciones.descripcion }}</td>
+      <td>{{ tabla_renovaciones.Baja }}</td>
+      <td>{{ tabla_renovaciones.Estado }}</td>
+    </tr>
+    <form id="form2" method="post" name="cambio_estado">
+    <tr id="row_3{{ loop.index }}" class="hidden-row">
+      <td colspan="9">
+        <select name="valor_estado" id="copito{{ loop.index }}">
+          <option value=""></option>
+            {% for valor in info_panel_diario %}
+              <option value="{{ valor.id_estado }}" >{{ valor.estado }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit" id="btn_cambio_estado" name="btn_cambio_estado" value="{{ tabla_renovaciones.poliza}}">ACTUALIZAR </button>
+        <button type="submit" name="redirect_panel_clientes"  value="{{ tabla_renovaciones.dni }}" >Ir a Panel Cliente</button>
+      </td>
+    </tr>
+    </form>
+    <form id="form3" method="post">
+      <tr id="row_2{{ loop.index }}" class="hidden-row">
+        <td colspan="9">
+          <input name="num_pol_nuev" id="caja" placeholder="Numero de Poliza nuevo" type="number" required />
+          <input name="prima" id="caja" placeholder="Prima" type="number" required />
+          <select name="valor_estado" id="copito{{ loop.index }}">
+            <option value=""></option>
+              {% for valor in info_panel_diario %}
+                <option value="{{ valor.id_estado }}" >{{ valor.estado }}</option>
+              {% endfor %}
+          </select>
+          <input type="hidden" name="id_productor" value="{{ tabla_renovaciones.id_productor }}">
+          <input type="hidden" name="id_dni"  value="{{ tabla_renovaciones.dni}}">
+          <input type="hidden" name="id_cia" value="{{ tabla_renovaciones.id_cia }}">
+          <input type="hidden" name="id_ramo" value="{{ tabla_renovaciones.id_ramo }}">
+          <input type="hidden" name="descrip" value="{{ tabla_renovaciones.descripcion }}">
+          <input type="hidden" name="fecha_baja" value="{{ tabla_renovaciones.Baja }}">
+          <input type="hidden" name="id_forma_pago_clientes" value="{{ tabla_renovaciones.id_forma_pago_clientes }}">
+          <input type="hidden" name="cbu_tc" value="{{ tabla_renovaciones.cbu_tc}}">
+          <input type="hidden" name="cantidad_cuotas" value="{{ tabla_renovaciones.cantidad_cuotas }}">
+
+          <input type="hidden" name="id_ciclo_facturacion" value="{{ tabla_renovaciones.id_ciclo_facturacion}}"> 
+          <input type="hidden" name="refacturacion" value="{{ tabla_renovaciones.fecha_refacturacion }}">
+          <input type="hidden" name="sa_ajustado_dolar" value="{{ tabla_renovaciones.sa_ajustado_dolar}}">
+          <input type="hidden" name="poliza_renov" value="1">
+          <input type="hidden" name="num_pol_vieja" value="{{ tabla_renovaciones.poliza}}">
+          <button type="submit" id="valor_poliza" name="btn_renovacion">Renovar</button>
+         
+         
+          <form method="POST">    
+            <button type="submit" id="boton" name="renovacion_poliza">
+              Renovar con distintas condicciones
+            </button>            
+        </form>
+        </td>
+      </tr>
+      </form>
+      
+    {% endfor %}
+  </tbody>
+</table>
+<br>
+<h1>Polizas a vencer</h1>
+<table>
+  <thead>
+    <tr>
+      <th> Cambio de estado </th>
+      <th> Renovar Poliza </th>
+      <th>poliza</th>
+      <th>Titular</th>
+      <th>DNI</th>
+      <th>Cia</th>
+      <th>ramo</th>
+      <th>descripcion</th>
+      <th>baja</th>
+      <th>estado</th>
+  
+    </tr>
+  </thead>
+  <tbody>
+    {% for tabla_a_renovaciones in tabla_a_renovaciones %}
+    <tr>
+      <td>
+        <button onclick="toggleRow('row_4{{ loop.index }}')">+</button>
+      </td>
+      <td>
+        <button onclick="toggleRow2('row_5{{ loop.index }}')">+</button>
+      </td>
+      <td>{{ tabla_a_renovaciones.poliza }}</td>  
+      <td>{{ tabla_a_renovaciones.cliente }}</td>
+      <td>{{ tabla_a_renovaciones.dni }}</td>
+      <td>{{ tabla_a_renovaciones.cia }}</td>
+      <td>{{ tabla_a_renovaciones.ramo }}</td>
+      <td>{{ tabla_a_renovaciones.descripcion }}</td>
+      <td>{{ tabla_a_renovaciones.Baja }}</td>
+      <td>{{ tabla_a_renovaciones.Estado }}</td>
+    </tr>
+    <form id="form4" method="post" name="cambio_estado">
+    <tr id="row_4{{ loop.index }}" class="hidden-row">
+      <td colspan="9">
+        <select name="valor_estado" id="copito{{ loop.index }}">
+          <option value=""></option>
+            {% for valor in info_panel_diario %}
+              <option value="{{ valor.id_estado }}" >{{ valor.estado }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit" id="btn_cambio_estado" name="btn_cambio_estado" value="{{ tabla_a_renovaciones.poliza}}">ACTUALIZAR </button> 
+        <button type="submit" name="redirect_panel_clientes"  value="{{ tabla_a_renovaciones.dni }}" >Ir a Panel Cliente</button>
+      </td>
+    </tr>
+    </form>
+    <form id="form5" method="post">
+      <tr id="row_5{{ loop.index }}" class="hidden-row">
+        <td colspan="9">
+          <input name="num_pol_nuev" id="caja" placeholder="Numero de Poliza nuevo" type="number" required />
+          <input name="prima" id="caja" placeholder="Prima" type="number" required />
+          <select name="valor_estado" id="copito{{ loop.index }}">
+            <option value=""></option>
+              {% for valor in info_panel_diario %}
+                <option value="{{ valor.id_estado }}" >{{ valor.estado }}</option>
+              {% endfor %}
+          </select>
+          <input type="hidden" name="id_productor" value="{{ tabla_a_renovaciones.id_productor }}">
+          <input type="hidden" name="id_dni"  value="{{ tabla_a_renovaciones.dni}}">
+          <input type="hidden" name="id_cia" value="{{ tabla_a_renovaciones.id_cia }}">
+          <input type="hidden" name="id_ramo" value="{{ tabla_a_renovaciones.id_ramo }}">
+          <input type="hidden" name="descrip" value="{{ tabla_a_renovaciones.descripcion }}">
+          <input type="hidden" name="fecha_baja" value="{{ tabla_a_renovaciones.Baja }}">
+          <input type="hidden" name="id_forma_pago_clientes" value="{{ tabla_a_renovaciones.id_forma_pago_clientes }}">
+          <input type="hidden" name="cbu_tc" value="{{ tabla_a_renovaciones.cbu_tc}}">
+          <input type="hidden" name="cantidad_cuotas" value="{{ tabla_a_renovaciones.cantidad_cuotas }}">
+
+          <input type="hidden" name="id_ciclo_facturacion" value="{{ tabla_a_renovaciones.id_ciclo_facturacion}}"> 
+          <input type="hidden" name="refacturacion" value="{{ tabla_a_renovaciones.fecha_refacturacion }}">
+          <input type="hidden" name="sa_ajustado_dolar" value="{{ tabla_a_renovaciones.sa_ajustado_dolar}}">
+          <input type="hidden" name="poliza_renov" value="1">
+          <input type="hidden" name="num_pol_vieja" value="{{ tabla_a_renovaciones.poliza}}">
+          <button type="submit" id="valor_poliza" name="btn_renovacion">Renovar</button>
+         
+        
+          
+            <form  method="POST">    
+              <button type="submit" id="boton" name="renovacion_poliza">
+                Renovar con distintas condicciones
+              </button>            
+          </form>
+        </td>   
+      </tr>
+      </form>
+      
+    {% endfor %}
+  </tbody>
+</table>
+<h1>Polizas a controlar por inflacion</h1>
+<table>
+  <thead>
+    <tr>
+      <th> detalles </th>
+      <th> modificacion poliza </th>
+      <th>poliza</th>
+      <th>Titular</th>
+      <th>DNI</th>
+      <th>Cia</th>
+      <th>ramo</th>
+      <th>descripcion</th>
+      <th>baja</th>
+      <th>estado</th>
+      <th>Ultimo contacto</th>
+      <th>detalle</th>
+
+  
+    </tr>
+  </thead>
+  <tbody>
+    {% for panel_pol_ajustado_dolar in panel_pol_ajustado_dolar %}
+    <tr>
+      <td>
+        <button onclick="toggleRow('row_6{{ loop.index }}')">+</button>
+      </td>
+      <td>
+        <button onclick="toggleRow('row_7{{ loop.index }}')">+</button>
+      </td>
+      <td>{{ panel_pol_ajustado_dolar.id_poliza }}</td>  
+      <td>{{ panel_pol_ajustado_dolar.nom_apell }}</td>
+      <td>{{ panel_pol_ajustado_dolar.id_dni }}</td>
+      <td>{{ panel_pol_ajustado_dolar.cia }}</td>
+      <td>{{ panel_pol_ajustado_dolar.ramo }}</td>
+      <td>{{ panel_pol_ajustado_dolar.descrip }}</td>
+      <td>{{ panel_pol_ajustado_dolar.fecha_baja }}</td>
+      <td>{{ panel_pol_ajustado_dolar.estado_poliza }}</td>
+      <td>{{ panel_pol_ajustado_dolar.utlimo_contacto_cliente }}</td>
+      <td>{{ panel_pol_ajustado_dolar.comentarios }}</td>
+
+
+    </tr>
+    <form id="form7" method="post" name="cambio_estado">
+      <tr id="row_7{{ loop.index }}" class="hidden-row">
+        <td colspan="9">
+          <input name="nuevo_comentario" id="caja"  type="text" value="{{ panel_pol_ajustado_dolar.comentarios }}" required />
+          <button type="submit" id="btn_cambio_estado" name="btn_cambio_estado" value="{{ panel_pol_ajustado_dolar.id_poliza}}">ACTUALIZAR </button> 
+          <button type="submit" name="redirect_panel_clientes"  value="{{ panel_pol_ajustado_dolar.id_dni  }}" >Ir a Panel Cliente</button>
+        </td>
+      </tr>
+    </form>
+    <form id="form8" method="post" name="cambio_estado">
+        <tr id="row_6{{ loop.index }}" class="hidden-row">
+          <td colspan="9">
+            <label for="dd">comentarios</label>
+            <input name="comentario_ajustado_dolar" id="caja"  type="text" value="{{ panel_pol_ajustado_dolar.comentarios }}" required />
+            <button type="submit" id="btn_upd_comentarios" name="btn_upd_comentarios" value="{{ panel_pol_ajustado_dolar.id_poliza}}">ACTUALIZAR </button> 
+            </br>
+            <label for="Fecha_ultimo_contacto">Fecha ultimo contacto</label>
+            <input name="fecha_ultimo_contacto" id="caja_fecha_comentario" type="date" required />
+            <button type="submit" id="btn_upd_vencimiento_comentario" name="btn_upd_vencimiento_comentario" value="{{ panel_pol_ajustado_dolar.id_poliza}}">Postergar Charla</button> 
+            
+            </td>
+        </tr>
+    </form>
+
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

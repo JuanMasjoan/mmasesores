@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block header %} 
+<h2> {% block title %} Expansion de Clientes{% endblock %} </h2>
+{% endblock %}
+
+{% block content %} 
+    <a class="action" href="{{ url_for('contabilidad.facturas_cia') }}">Facturas por cia  </a>
+    <br>
+    <a class="action" href="{{ url_for('todo.lector_mora') }}">Contabilidad  </a>
+    <br>
+    <a class="action" href="{{ url_for('contabilidad.vista_de_cartera_x_ramo') }}" > Estado de cartera</a>
+
+    <br>
+    <a class="action" href="{{ url_for('contabilidad.carga_factura') }}" > Carga de Facturas </a>
+    <br>
+{% endblock %}  

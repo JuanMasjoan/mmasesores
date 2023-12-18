@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block header %} 
+<h2> {% block title %} Mantenimiento De Cartera {% endblock %} </h2>
+{% endblock %}
+
+{% block content %}
+    <a class="action" href="{{ url_for('todo.mora') }}"> Polizas en mora</a>
+    <br>
+    <a class="action" href="{{ url_for('todo.vencida_poliza') }}"> Polizas vencida </a>
+    <br>
+    <a class="action" href="{{ url_for('todo.a_vencida_poliza') }}">Polizas Proximas a Vencer </a>
+    <br>
+    <a class="action" href="{{ url_for('todo.buscador_poliza') }}"> Buscar Poliza </a>
+    <br>
+    <a class="action" href="{{ url_for('todo.mod_est_pol') }}">actualizar estado Poliza </a>
+    <br>
+    <a class="action" href="{{ url_for('todo.siniestros') }}">Gestion de Siniestros</a>
+    <br>
+    <a class="action" href="{{ url_for('todo.buscador_dni') }}"> Buscar Cliente </a>
+    <br>
+
+{% endblock %}  

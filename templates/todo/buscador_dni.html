@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+<h2> {% block title %} Buscador DNI{% endblock %} </h2>
+
+
+{% block header %} 
+<H1> Buscador DNI</H1>
+
+<style>
+    .hidden-row {
+      display: none;
+  }
+  </style>    
+  
+  <script>
+  function toggleRow(rowId) {
+    var row = document.getElementById(rowId);
+    row.classList.toggle('hidden-row');
+  }
+  
+  
+  </script>
+  
+{% endblock %}
+
+{% block content %}
+<form method= "POST">
+    <select name="buscador_tipo" id="buscador_tipo">
+        <option value="DNI">Dni - Cuit</option>
+        <option value="titular">APELLIDO O NOMBRE</option>
+        <option value="representante">REPRESENTANTE</option>
+        <option value="observ">OBSERVACIONES</option>
+    </select>
+    <input type="text" name="buscador_texto" placeholder="palabra clave">
+    <button type="submit" name="btn_buscar_tipo">Buscar</button>
+    <br>
+</form> 
+<button onclick="toggleRow('row_')">Nuevo Cliente</button>
+<br>
+<table>
+    <thead>    
+        <form id="form" method="POST">
+            <tr id="row_" class="hidden-row">
+                <td colspan="9">
+                    <form method="POST">
+                        <label for="id_dni">DNI</label>
+                        <input name="id_dni" id="id_dni" type="number" required />
+                        <label for="nom_apell">Nombre y Apellido</label>
+                        <input name="nom_apell" id="nom_apell" required/>
+                        <label for="cuit">CUIT</label>
+                        <input name="cuit" id="cuit" type="number"/>
+                        <label for="representante">Representante</label>
+                        <input name="representante" id="representante" />
+                        <input name="fecha_nac" id="fecha_nac" placeholder="Fecha de Nacimiento" type="date"/>
+                        <select name="estado_civil" >
+                            <option value=""></option>
+                            {% for valor in valores_est_civil %}
+                            {% if loop.index == 1 %}
+                                <option value="{{ valor.id_estado_civil }}" selected>{{ valor.estado_civil }}</option>
+                            {% else %}
+                                <option value="{{ valor.id_estado_civil }}">{{ valor.estado_civil }}</option>
+                            {% endif %}
+                            {% endfor %}
+                        </select>
+                        <input name="dir_part" id="dir_part" placeholder="Direccion Particular" required/>
+                        <input name="dir_legal" id="dir_legal" placeholder="Direccion Legal" />
+                        <input name="codigo_postal" id="codigo_postal" placeholder="Codigo Postal" required/>
+                        <select name="provincia" >
+                            <option value=""></option>
+                            {% for valor in valor_provincia %}
+                            {% if loop.index == 1 %}
+                                <option value="{{ valor.id_provincia }}" selected>{{ valor.provincia }}</option>
+                            {% else %}
+                                <option value="{{ valor.id_provincia }}">{{ valor.provincia }}</option>
+                            {% endif %}
+                            {% endfor %}
+                        </select>
+                        <input name="tel" id="tel" placeholder="Telefono" type="number" required/>
+                        <input name="mail" id="mail" placeholder="E-mail" type="email" required/>
+                        <input name="obs" id="obs" placeholder="Observaciones.." type="text" />
+                        <input type="submit" value="Guardar"  name="cliente_nuevo"/>
+                    </form>
+                    <br>
+                </td>
+            </tr>
+        </form>
+    
+        <tr>
+            <th> + </th>
+            <th>APELLIDO Y NOMBRE </th>
+            <th>DNI</th>
+            <th>CUIT</th>
+            <th>REPRESENTANTE</th>
+            <th> OBSERVACIONES</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for panel_cliente_info in tabla_cons_clientes_amostrar%}
+        <form method= "POST">
+        <tr>
+            <td> <button  type="submit" name="panel_clientes" value="{{ panel_cliente_info.DNI }}" >Explorar</button></td>
+            <td>{{ panel_cliente_info.titular }}</td>
+            <td>{{ panel_cliente_info.DNI }}</td>
+            <td>{{ panel_cliente_info.cuit_cuil }}</td>
+            <td>{{ panel_cliente_info.representante}}</td>
+            <td>{{ panel_cliente_info.observ }}</td>    
+        </tr>
+        
+        {% endfor %}
+    </tbody>
+</table>
+</form>
+{% endblock %}

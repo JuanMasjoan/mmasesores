@@ -1,0 +1,48 @@
+{% extends 'base.html'%}
+ {% block title %} Cliente Nuevo  {% endblock %} 
+{% block heder %}
+<h1> Alta Cliente </h1>
+{% endblock %}
+
+{% block content %}
+    <form method="POST">
+        <label for="id_dni">DNI</label>
+        <input name="id_dni" id="id_dni" type="number" required />
+        <label for="nom_apell">Nombre y Apellido</label>
+        <input name="nom_apell" id="nom_apell" required/>
+        <label for="cuit">CUIT</label>
+        <input name="cuit" id="cuit" type="number"/>
+        <label for="representante">Representante</label>
+        <input name="representante" id="representante" />
+        <input name="fecha_nac" id="fecha_nac" placeholder="Fecha de Nacimiento" type="date"/>
+        <select name="estado_civil" >
+            <option value=""></option>
+            {% for valor in valores_est_civil %}
+            {% if loop.index == 1 %}
+                <option value="{{ valor[0] }}" selected>{{ valor[1] }}</option>
+            {% else %}
+                <option value="{{ valor[0] }}">{{ valor[1] }}</option>
+            {% endif %}
+            {% endfor %}
+        </select>
+        <input name="dir_part" id="dir_part" placeholder="Direccion Particular" required/>
+        <input name="dir_legal" id="dir_legal" placeholder="Direccion Legal" />
+        <input name="codigo_postal" id="codigo_postal" placeholder="Codigo Postal" required/>
+        <select name="provincia" >
+            <option value=""></option>
+            {% for valor in valores_provincia %}
+            {% if loop.index == 1 %}
+                <option value="{{ valor[0] }}" selected>{{ valor[1] }}</option>
+            {% else %}
+                <option value="{{ valor[0] }}">{{ valor[1] }}</option>
+            {% endif %}
+            {% endfor %}
+        </select>
+        <input name="tel" id="tel" placeholder="Telefono" type="number" required/>
+        <input name="mail" id="mail" placeholder="E-mail" type="email" required/>
+        <input name="obs" id="obs" placeholder="Observaciones.." type="text" />
+        <input type="submit" value="Guardar" />
+    </form>
+    <br>
+
+{% endblock %}

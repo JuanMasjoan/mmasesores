@@ -1,0 +1,70 @@
+index
+- ver por cliente / busqueda especifica
+- mantenimiento de cartera
+- Expansion de clientes
+- Estadisticas de cartera
+- Agenda de notas
+
+INDEX
+|
+|-busqueda especifica
+|  |
+|  |- estado de polizas de Cartera
+|  |- buscar cliente 
+|  |- Historial de siniestro * A CREAR *
+|  |- Enviar Consulta especifica * A CREAR *
+|  |- configuracion de App * A CREAR *
+|
+|- mantenimiento de cartera
+|   |- Polizas En mora
+|   |- Polizas Vencidas
+|   |- Polizas Proximas a vencer 
+|   |- actualizar estado de Poliza 
+|   |- Gestion de siniestros 
+|   |- Buscar Cliente 
+|    	   | - ver Informacion de cliente 
+|    	   | - Buscar poliza 	
+|          | - Alta Poliza	* A CREAR *
+|          | - Generar Endoso	* A CREAR *
+|          | - alta siniestro	* A CREAR *
+|    	   | - Buscar siniestro
+|          | - modificar datos del cliente * A CREAR *
+|    	   | - Historial de siniestros cliente  
+|
+|
+|
+| -Expansion de clientes
+|    | - Alta Cliente
+|    	  | - Agregar poliza a cliente nuevo * A CREAR *
+|    | - Agenda Captacion * A CREAR *
+|    | - Historial de clientes en Captacion (prospectos)
+|    | - Alta Poliza 
+|    | - Crear Lista * A CREAR *		
+|          | - Lista *el nombre lo elige el usuario *
+|          | - Lista *el nombre lo elige el usuario *
+|          | - Lista *el nombre lo elige el usuario *
+|	
+|	
+|- Estadisticas y Contabilidadde cartera
+|    |- Cambios de Cartera * A CREAR *
+| 	 |- mes  * A CREAR *
+|    	|- semestre * A CREAR *
+|    	|- año * A CREAR *
+|    	|- Especifico  * A CREAR *
+|    |- busqueda especifica de  * A CREAR *
+|    |      |- clientes por ramo   * A CREAR *
+|    |      |- clientes por compania   * A CREAR *
+|    |      |- comisiones por compania/ramo y forma de pago	* A CREAR *
+|    |      |- facturacion por Compañia 	* A CREAR *
+|    |
+|    |- contabilidad * A CREAR *
+|         | - Facturas Mensuales  * A CREAR *
+|         | - Retenciones mensuales  * A CREAR *
+|         | - Bruto Mensual 	* A CREAR *	
+|         | - Cargar Facturas 
+|    | - Estadisticas	* A CREAR *
+|	           
+| - Agenda Diaria / mensual
+
+
+

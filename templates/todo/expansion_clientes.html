@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block header %} 
+<h2> {% block title %} Expansion de Clientes{% endblock %} </h2>
+{% endblock %}
+
+{% block content %} 
+   <a class="action" href="{{ url_for('todo.cliente_nuevo') }}"> Cliente nuevo</a>
+    <br>
+    <a class="action" href="{{ url_for('todo.alta_poliza') }}"> Alta Poliza </a>
+    <br>
+    <a class="action">Agenda Captacion </a>
+    <br>
+    <a class="action" href="{{ url_for('todo.ag_cartera') }}"> Historial de clientes en Captacion </a>
+    <br>
+    <a class="action">Crear Lista</a>
+    <br>
+
+{% endblock %}  

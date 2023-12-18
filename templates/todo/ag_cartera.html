@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+<h2> {% block title %} Agenda de cartera {% endblock %} </h2>
+
+{% block header %} 
+    <style>
+        .hidden-row {
+            display: none;
+    }
+    </style>    
+
+    <script >
+    function toggleRow(rowId) {
+        var row = document.getElementById(rowId);
+        row.classList.toggle('hidden-row');
+    }
+    </script>
+    
+    <H1> Agenda diaria de contactos </H1>
+    {% endblock %}
+    
+    
+    {% block content %}
+    <body>
+    <h1>Agenda de cartera</h1>
+    <form action="{{ url_for('todo.ag_cartera') }}" method="POST">    
+        <button type="submit" id="agregar_nuevo" name="agregar_nuevo">
+            Agregar Nuevo
+        </button>            
+    </form>
+    <table>
+        <tr>
+            <th> + </th>
+            <th>TG ID DNI</th>
+            <th>TG Nombre Apellido</th>
+            <th>TG Prod Acaptar</th>
+            <th>TG Prod Logrados</th>
+            <th>tg_fecha_contacto</th>
+            <th>TG Comentarios</th>
+            <th>TG fecha importate a tener</th>
+            <th>TG Estado Contacto</th>
+            <th>TG COMPLETED</th>
+        </tr>
+        {% for t_ag_cartera in tabla_ag_cartera %}
+        <tr>
+            <td>
+                <button onclick="toggleRow('row_{{ loop.index }}')">+</button>
+            <td>{{ t_ag_cartera.tg_id_dni }}</td>
+            <td>{{ t_ag_cartera.tg_nombre_apellido }}</td>
+            <td>{{ t_ag_cartera.tg_prod_acaptar }}</td>
+            <td>{{ t_ag_cartera.tg_prod_logrados }}</td>
+            <td>{{ t_ag_cartera.tg_fecha_contacto }}</td>
+            <td>{{ t_ag_cartera.tg_comentarios }}</td>
+            <td> fecha para alerta</td>
+            <td>{{ t_ag_cartera.tg_estado_contacto }}</td>
+            <td>
+                <input type="checkbox" {% if t_ag_cartera.tg_COMPLETED %}checked{% endif %}>
+            </td>
+            </tr>
+            <form action="{{ url_for('todo.ag_cartera') }}" method="POST">    
+                <tr id="row_{{ loop.index }}" class="hidden-row">
+                    <td colspan="7">
+                        <label> PRODUCTOR ACEPTAR</label>
+                        <input type="text" id= "prod_acaptar" name="prod_acaptar" value="{{ t_ag_cartera.tg_prod_acaptar }}">
+                        <label> PRODUCTOR LOGRADOS</label>
+                        <input type="text" id= "prod_logrados" name="prod_logrados" value="{{ t_ag_cartera.tg_prod_logrados }}">
+                        <label> COMENTARIOS </label>
+                        <input type="text" id = "comentarios" name="comentarios" value="{{ t_ag_cartera.tg_comentarios }}">
+                        <label> ESTADO</label>
+                        <input type="text" id = "estado_contacto" name="estado_contacto" value="{{ t_ag_cartera.tg_estado_contacto }}">
+                        <button > Agendar Para Hoy - NF</button>
+                        <button type="submit" id="id_contacto_cliente" name="id_contacto_cliente" value="{{ t_ag_cartera.tg_id_contacto_cliente }}">ACTUALIZAR</button>
+                        <button type="submit" id="Elimninar_contacto_cliente" name="Elimninar_contacto_cliente" value="{{ t_ag_cartera.tg_id_contacto_cliente }}">Eliminar </button>
+                    </td>
+                </tr>
+            </form>
+            
+        {% endfor %}
+    </table>
+</body>
+{% endblock %}

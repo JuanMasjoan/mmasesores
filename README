@@ -1,0 +1,83 @@
+## MANEJO CARTERA PAS  [ +PAS]
+
+## Benefits and Advantages:
+Tailored for insurance producers, ensuring the application meets specific needs.
+Offers an all-in-one tool allowing producers to comprehensively view their clients and track renewals and overdue payments.
+Automates tasks and simplifies processes, enhancing efficiency in client portfolio management.
+Facilitates goal setting for both maintaining existing portfolios and expanding them.
+Provides unique tools not available in other market solutions.
+
+## Prerequisites
+
+To run this application, ensure you have installed Python (version 3.11.0 or higher) on your system. Then, install all required libraries and dependencies by executing the following command:
+
+    pip install -r requirements.txt
+
+## Installation and Configuration
+Clone this repository to your local machine.
+Activate the virtual environment:
+    - Unix/Linux systems: source venv/bin/activate
+    - Windows systems: venv\Scripts\activate
+Install dependencies using:
+    pip install -r requirements.txt
+pip install -r requirements.txt
+
+pip install -r requirements.txt
+
+For database generation, visit / db_cartera_cliente URL to create database queries and relationships.
+
+To execute the file, utilize the following commands:
+$ . venv/Scripts/activate
+$ export FLASK_APP=Final
+$ export FLASK_ENV=development
+$ flask run
+
+
+## Additional Notes
+This application requires MySQL Workbench and the creation of the database using the repository "db_cartera_cliente" found under my profile.
+Configuration variables (stored in environment variables):
+    - FLASK_SECRET_KEY: Key for Flask.
+    - FLASK_DATABASE_HOST: Database host address.
+    - FLASK_DATABASE_USER: Database username.
+    - FLASK_DATABASE_PASSWORD: Database password.
+    - FLASK_DATABASE: Database name ("cartera_cliente").
+
+
+## MANEJO CARTERA PAS  [ +PAS]
+
+## Beneficios y Ventajas:
+Adaptado para productores de seguros, asegurando que la aplicación cumpla con necesidades específicas.
+Ofrece una herramienta integral que permite a los productores ver de manera completa a sus clientes y hacer seguimiento de renovaciones y pagos atrasados.
+Automatiza tareas y simplifica procesos, mejorando la eficiencia en la gestión de la cartera de clientes.
+Facilita el establecimiento de objetivos tanto para mantener carteras existentes como para expandirlas.
+Proporciona herramientas únicas no disponibles en otras soluciones del mercado.
+
+## Requisitos Previos
+Para ejecutar esta aplicación, asegúrate de tener instalado Python (versión 3.11.0 o superior) en tu sistema. Luego, puedes instalar todas las bibliotecas y dependencias necesarias ejecutando el siguiente comando:
+    -   pip install -r requirements.txt
+
+## Instalación y Configuración
+Clona este repositorio en tu máquina local.
+Activa el entorno virtual:
+Sistemas Unix/Linux: source venv/bin/activate
+Sistemas Windows: venv\Scripts\activate
+Instala las dependencias usando:
+    - pip install -r requirements.txt
+
+pip install -r requirements.txt
+Para la generación de la base de datos, visita la URL / db_cartera_cliente para crear consultas y relaciones de la base de datos.
+
+Para ejecutar el archivo, utiliza los siguientes comandos:
+    $ . venv/Scripts/activate
+    $ export FLASK_APP=Final
+    $ export FLASK_ENV=development
+    $ flask run
+
+## Notas Adicionales
+Esta aplicación requiere MySQL Workbench y la creación de la base de datos utilizando el repositorio "db_cartera_cliente" encontrado en mi perfil.
+Variables de configuración (almacenadas en variables de entorno):
+FLASK_SECRET_KEY: Clave para Flask.
+FLASK_DATABASE_HOST: Dirección del host de la base de datos.
+FLASK_DATABASE_USER: Nombre de usuario de la base de datos.
+FLASK_DATABASE_PASSWORD: Contraseña de la base de datos.
+FLASK_DATABASE: Nombre de la base de datos ("cartera_cliente").

@@ -74,13 +74,19 @@ def login ():
 
             #print(fecha_ult_upd[1])
 
-            valores_buscar = (str(fecha_vencer), str(fecha_pago_efect),str(fecha_hoy))
-            success, upd_diario_resultado = upd_diario.select_sp('sp_upd_diarias', valores_buscar)    
-            
-            if 'mensaje' in upd_diario_resultado[0]:
+            valores_buscar = (str(fecha_vencer), str(fecha_pago_efect), str(fecha_hoy))
+            success, upd_diario_resultado = upd_diario.select_sp('sp_upd_diarias', valores_buscar)
+
+            if not success:
+                flash('Error al ejecutar el procedimiento.')
+            elif 'mensaje' in upd_diario_resultado[0]:
                 flash(upd_diario_resultado[0]['mensaje'])
             else:
-                flash('Actualizacion realizada correctamente')
+                for fila in upd_diario_resultado:
+                    funcion = fila.get('funcion', 'Función desconocida')
+                    resultado = fila.get('resultado', 'Sin resultado')
+                    flash(f"{funcion}: {resultado}")
+
         
             return redirect(url_for('todo.index'))
         flash(error)

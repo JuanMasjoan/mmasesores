@@ -181,7 +181,7 @@
       <td>{{ tabla_renovaciones.Estado }}</td>
     </tr>
     <form id="form2" method="post" name="cambio_estado">
-    <tr id="row_3{{ loop.index }}" class="hidden-row">
+      <tr id="row_3{{ loop.index }}" class="hidden-row">
       <td colspan="9">
         <select name="valor_estado" id="copito{{ loop.index }}">
           <option value=""></option>
@@ -199,6 +199,7 @@
         <td colspan="9">
           <input name="num_pol_nuev" id="caja" placeholder="Numero de Poliza nuevo" type="number" required />
           <input name="prima" id="caja" placeholder="Prima" type="number" required />
+          <input name="fecha_baja_pol_renovada" id="caja" placeholder="Fecha de Baja" type="date" required />
           <select name="valor_estado" id="copito{{ loop.index }}">
             <option value=""></option>
               {% for valor in info_panel_diario %}
@@ -262,14 +263,14 @@
       <td>
         <button onclick="toggleRow2('row_5{{ loop.index }}')">+</button>
       </td>
-      <td>{{ tabla_a_renovaciones.poliza }}</td>  
-      <td>{{ tabla_a_renovaciones.cliente }}</td>
-      <td>{{ tabla_a_renovaciones.dni }}</td>
+      <td>{{ tabla_a_renovaciones.id_poliza }}</td>  
+      <td>{{ tabla_a_renovaciones.nom_apell }}</td>
+      <td>{{ tabla_a_renovaciones.id_dni }}</td>
       <td>{{ tabla_a_renovaciones.cia }}</td>
       <td>{{ tabla_a_renovaciones.ramo }}</td>
-      <td>{{ tabla_a_renovaciones.descripcion }}</td>
-      <td>{{ tabla_a_renovaciones.Baja }}</td>
-      <td>{{ tabla_a_renovaciones.Estado }}</td>
+      <td>{{ tabla_a_renovaciones.descrip}}</td>
+      <td>{{ tabla_a_renovaciones.fecha_baja }}</td>
+      <td>{{ tabla_a_renovaciones.estado_poliza }}</td>
     </tr>
     <form id="form4" method="post" name="cambio_estado">
     <tr id="row_4{{ loop.index }}" class="hidden-row">
@@ -280,8 +281,8 @@
               <option value="{{ valor.id_estado }}" >{{ valor.estado }}</option>
             {% endfor %}
         </select>
-        <button type="submit" id="btn_cambio_estado" name="btn_cambio_estado" value="{{ tabla_a_renovaciones.poliza}}">ACTUALIZAR </button> 
-        <button type="submit" name="redirect_panel_clientes"  value="{{ tabla_a_renovaciones.dni }}" >Ir a Panel Cliente</button>
+        <button type="submit" id="btn_cambio_estado" name="btn_cambio_estado" value="{{ tabla_a_renovaciones.id_poliza}}">ACTUALIZAR </button> 
+        <button type="submit" name="redirect_panel_clientes"  value="{{ tabla_a_renovaciones.id_dni }}" >Ir a Panel Cliente</button>
       </td>
     </tr>
     </form>
@@ -289,6 +290,7 @@
       <tr id="row_5{{ loop.index }}" class="hidden-row">
         <td colspan="9">
           <input name="num_pol_nuev" id="caja" placeholder="Numero de Poliza nuevo" type="number" required />
+          <input name="fecha_baja_pol_renovada" id="caja" placeholder="Fecha de Baja" type="date" required />
           <input name="prima" id="caja" placeholder="Prima" type="number" required />
           <select name="valor_estado" id="copito{{ loop.index }}">
             <option value=""></option>
@@ -297,11 +299,11 @@
               {% endfor %}
           </select>
           <input type="hidden" name="id_productor" value="{{ tabla_a_renovaciones.id_productor }}">
-          <input type="hidden" name="id_dni"  value="{{ tabla_a_renovaciones.dni}}">
+          <input type="hidden" name="id_dni"  value="{{ tabla_a_renovaciones.id_dni}}">
           <input type="hidden" name="id_cia" value="{{ tabla_a_renovaciones.id_cia }}">
-          <input type="hidden" name="id_ramo" value="{{ tabla_a_renovaciones.id_ramo }}">
-          <input type="hidden" name="descrip" value="{{ tabla_a_renovaciones.descripcion }}">
-          <input type="hidden" name="fecha_baja" value="{{ tabla_a_renovaciones.Baja }}">
+          <input type="hidden" name="id_ramo" value="{{ tabla_a_renovaciones.id_ramo}}">
+          <input type="hidden" name="descrip" value="{{ tabla_a_renovaciones.descrip }}">
+          <input type="hidden" name="fecha_baja" value="{{ tabla_a_renovaciones.fecha_baja }}">
           <input type="hidden" name="id_forma_pago_clientes" value="{{ tabla_a_renovaciones.id_forma_pago_clientes }}">
           <input type="hidden" name="cbu_tc" value="{{ tabla_a_renovaciones.cbu_tc}}">
           <input type="hidden" name="cantidad_cuotas" value="{{ tabla_a_renovaciones.cantidad_cuotas }}">
@@ -310,7 +312,7 @@
           <input type="hidden" name="refacturacion" value="{{ tabla_a_renovaciones.fecha_refacturacion }}">
           <input type="hidden" name="sa_ajustado_dolar" value="{{ tabla_a_renovaciones.sa_ajustado_dolar}}">
           <input type="hidden" name="poliza_renov" value="1">
-          <input type="hidden" name="num_pol_vieja" value="{{ tabla_a_renovaciones.poliza}}">
+          <input type="hidden" name="num_pol_vieja" value="{{ tabla_a_renovaciones.id_poliza}}">
           <button type="submit" id="valor_poliza" name="btn_renovacion">Renovar</button>
          
         
@@ -327,28 +329,31 @@
     {% endfor %}
   </tbody>
 </table>
-<h1>Polizas a controlar por inflacion</h1>
+
+
+
+<h1>Polizas a Refacturar  </h1>
 <table>
   <thead>
     <tr>
-      <th> detalles </th>
-      <th> modificacion poliza </th>
+      <th> Modificar Estado </th>
+      <th> Refacturar  Poliza</th>
       <th>poliza</th>
       <th>Titular</th>
       <th>DNI</th>
       <th>Cia</th>
       <th>ramo</th>
       <th>descripcion</th>
-      <th>baja</th>
+      <th>Fecha baja</th>
+      <th>Fecha Refacturacion</th>
+      <th>Prima</th>
       <th>estado</th>
-      <th>Ultimo contacto</th>
-      <th>detalle</th>
 
   
     </tr>
   </thead>
   <tbody>
-    {% for panel_pol_ajustado_dolar in panel_pol_ajustado_dolar %}
+    {% for panel_pol_refacturacion in panel_pol_refacturacion %}
     <tr>
       <td>
         <button onclick="toggleRow('row_6{{ loop.index }}')">+</button>
@@ -356,41 +361,41 @@
       <td>
         <button onclick="toggleRow('row_7{{ loop.index }}')">+</button>
       </td>
-      <td>{{ panel_pol_ajustado_dolar.id_poliza }}</td>  
-      <td>{{ panel_pol_ajustado_dolar.nom_apell }}</td>
-      <td>{{ panel_pol_ajustado_dolar.id_dni }}</td>
-      <td>{{ panel_pol_ajustado_dolar.cia }}</td>
-      <td>{{ panel_pol_ajustado_dolar.ramo }}</td>
-      <td>{{ panel_pol_ajustado_dolar.descrip }}</td>
-      <td>{{ panel_pol_ajustado_dolar.fecha_baja }}</td>
-      <td>{{ panel_pol_ajustado_dolar.estado_poliza }}</td>
-      <td>{{ panel_pol_ajustado_dolar.utlimo_contacto_cliente }}</td>
-      <td>{{ panel_pol_ajustado_dolar.comentarios }}</td>
+      <td>{{ panel_pol_refacturacion.id_poliza }}</td>  
+      <td>{{ panel_pol_refacturacion.nom_apell }}</td>
+      <td>{{ panel_pol_refacturacion.id_dni }}</td>
+      <td>{{ panel_pol_refacturacion.cia }}</td>
+      <td>{{ panel_pol_refacturacion.ramo }}</td>
+      <td>{{ panel_pol_refacturacion.descrip }}</td>
+      <td>{{ panel_pol_refacturacion.fecha_baja }}</td>
+      <td>{{ panel_pol_refacturacion.fecha_refacturacion }}</td>
+      <td>{{ panel_pol_refacturacion.prima }}</td>
+      <td>{{ panel_pol_refacturacion.estado_poliza }}</td>
 
 
     </tr>
+    <form id="form6" method="post" name="cambio_estado">
+      <tr id="row_6{{ loop.index }}" class="hidden-row">
+        <td colspan="9">
+          <select name="valor_estado" id="copito{{ loop.index }}">
+            <option value=""></option>
+              {% for valor in info_panel_diario %}
+                <option value="{{ valor.id_estado }}" >{{ valor.estado }}</option>
+              {% endfor %}
+          </select>
+          <button type="submit" id="btn_cambio_estado" name="btn_cambio_estado" value="{{ panel_pol_refacturacion.id_poliza}}">ACTUALIZAR </button> 
+          <button type="submit" name="redirect_panel_clientes"  value="{{ panel_pol_refacturacion.id_dni }}" >Ir a Panel Cliente</button>
+        </td>
+      </tr>
+      </form>
     <form id="form7" method="post" name="cambio_estado">
       <tr id="row_7{{ loop.index }}" class="hidden-row">
         <td colspan="9">
-          <input name="nuevo_comentario" id="caja"  type="text" value="{{ panel_pol_ajustado_dolar.comentarios }}" required />
-          <button type="submit" id="btn_cambio_estado" name="btn_cambio_estado" value="{{ panel_pol_ajustado_dolar.id_poliza}}">ACTUALIZAR </button> 
-          <button type="submit" name="redirect_panel_clientes"  value="{{ panel_pol_ajustado_dolar.id_dni  }}" >Ir a Panel Cliente</button>
+          <input name="nva_fecha_refacturacion" id="caja" placeholder="Proxima fecha de refacturacion" type="date" required />
+          <input name="nva_prima" id="caja" placeholder="Nueva Prima" type="number" required />          
+          <button type="submit" id="btn_upd_fecha_refacturacion" name="btn_upd_fecha_refacturacion" value="{{ panel_pol_refacturacion.id_poliza}}">ACTUALIZAR </button> 
         </td>
       </tr>
-    </form>
-    <form id="form8" method="post" name="cambio_estado">
-        <tr id="row_6{{ loop.index }}" class="hidden-row">
-          <td colspan="9">
-            <label for="dd">comentarios</label>
-            <input name="comentario_ajustado_dolar" id="caja"  type="text" value="{{ panel_pol_ajustado_dolar.comentarios }}" required />
-            <button type="submit" id="btn_upd_comentarios" name="btn_upd_comentarios" value="{{ panel_pol_ajustado_dolar.id_poliza}}">ACTUALIZAR </button> 
-            </br>
-            <label for="Fecha_ultimo_contacto">Fecha ultimo contacto</label>
-            <input name="fecha_ultimo_contacto" id="caja_fecha_comentario" type="date" required />
-            <button type="submit" id="btn_upd_vencimiento_comentario" name="btn_upd_vencimiento_comentario" value="{{ panel_pol_ajustado_dolar.id_poliza}}">Postergar Charla</button> 
-            
-            </td>
-        </tr>
     </form>
 
     {% endfor %}

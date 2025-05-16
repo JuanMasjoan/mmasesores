@@ -16,9 +16,14 @@ class Consultas_contabilida:
         formulario = ManejarFormulariosPost(request.form, campos_formulario)
         formulario.obtener_valores()
         
+        print (formulario ['valor_ramo'])
+        print (formulario ['buscador_ramo'])
+        print(formulario ['valor_cia'])
+        print(formulario['buscador_cia'])
         
         if formulario['buscador_ramo'] == 'on' and formulario['buscador_cia'] == 'on':
             flash('Debe elegir uno de los 2 filtros') 
+        
         
         else:
             if formulario['buscador_cia'] == 'on':

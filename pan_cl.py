@@ -108,25 +108,31 @@ def buscador_dni():
 
     if request.method == 'POST':
         if 'btn_buscar_tipo' in request.form:
+            #buscador para clientes a mostrar
             campos_buscar = ['buscador_texto' , 'buscador_tipo']
             _itinerador_post = ManejarFormulariosPost(request.form, campos_buscar)
             _itinerador_post.obtener_valores()
-
-            
+                        
             values_insert = (_itinerador_post['buscador_tipo'], _itinerador_post['buscador_texto'])
-            
 
             succes, tabla_cons_cliente_tipo = itinerador.select_sp('sp_buscar_cliente',values_insert)
-            
             
             if succes == False:
                 alerta = 'Error al Actualizar Panel del Cliente'
                 flash(alerta)
 
+            # para mostrar cumpleaños
 
+            succes_cumple, tabla_cumples = itinerador.select_sp('sp_fecha_cumple',())
+         
+            if succes_cumple == False:
+                alerta = 'Error al Actualizar Fechas de cumlpleaños'
+                flash(alerta)         
+            
             return render_template('todo/buscador_dni.html',
                                    tabla_cons_clientes_amostrar = tabla_cons_cliente_tipo,
-                                   valores_est_civil = valores_est_civil ,valor_provincia =  valor_provincia)
+                                   valores_est_civil = valores_est_civil ,valor_provincia =  valor_provincia,
+                                   tabla_cumples = tabla_cumples )
 
         if 'panel_clientes' in request.form:
             cliente_id = request.form['panel_clientes']

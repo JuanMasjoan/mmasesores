@@ -1,0 +1,71 @@
+
+<h1>Polizas a controlar por inflacion</h1>
+<table>
+  <thead>
+    <tr>
+      <th> detalles </th>
+      <th> modificacion poliza </th>
+      <th>poliza</th>
+      <th>Titular</th>
+      <th>DNI</th>
+      <th>Cia</th>
+      <th>ramo</th>
+      <th>descripcion</th>
+      <th>baja</th>
+      <th>estado</th>
+      <th>Ultimo contacto</th>
+      <th>detalle</th>
+
+  
+    </tr>
+  </thead>
+  <tbody>
+    {% for panel_pol_ajustado_dolar in panel_pol_ajustado_dolar %}
+    <tr>
+      <td>
+        <button onclick="toggleRow('row_6{{ loop.index }}')">+</button>
+      </td>
+      <td>
+        <button onclick="toggleRow('row_7{{ loop.index }}')">+</button>
+      </td>
+      <td>{{ panel_pol_ajustado_dolar.id_poliza }}</td>  
+      <td>{{ panel_pol_ajustado_dolar.nom_apell }}</td>
+      <td>{{ panel_pol_ajustado_dolar.id_dni }}</td>
+      <td>{{ panel_pol_ajustado_dolar.cia }}</td>
+      <td>{{ panel_pol_ajustado_dolar.ramo }}</td>
+      <td>{{ panel_pol_ajustado_dolar.descrip }}</td>
+      <td>{{ panel_pol_ajustado_dolar.fecha_baja }}</td>
+      <td>{{ panel_pol_ajustado_dolar.estado_poliza }}</td>
+      <td>{{ panel_pol_ajustado_dolar.utlimo_contacto_cliente }}</td>
+      <td>{{ panel_pol_ajustado_dolar.comentarios }}</td>
+
+
+    </tr>
+    <form id="form7" method="post" name="cambio_estado">
+      <tr id="row_7{{ loop.index }}" class="hidden-row">
+        <td colspan="9">
+          <input name="nuevo_comentario" id="caja"  type="text" value="{{ panel_pol_ajustado_dolar.comentarios }}" required />
+          <button type="submit" id="btn_cambio_estado" name="btn_cambio_estado" value="{{ panel_pol_ajustado_dolar.id_poliza}}">ACTUALIZAR </button> 
+          <button type="submit" name="redirect_panel_clientes"  value="{{ panel_pol_ajustado_dolar.id_dni  }}" >Ir a Panel Cliente</button>
+        </td>
+      </tr>
+    </form>
+    <form id="form8" method="post" name="cambio_estado">
+        <tr id="row_6{{ loop.index }}" class="hidden-row">
+          <td colspan="9">
+            <label for="dd">comentarios</label>
+            <input name="comentario_ajustado_dolar" id="caja"  type="text" value="{{ panel_pol_ajustado_dolar.comentarios }}" required />
+            <button type="submit" id="btn_upd_comentarios" name="btn_upd_comentarios" value="{{ panel_pol_ajustado_dolar.id_poliza}}">ACTUALIZAR </button> 
+            </br>
+            <label for="Fecha_ultimo_contacto">Fecha ultimo contacto</label>
+            <input name="fecha_ultimo_contacto" id="caja_fecha_comentario" type="date" required />
+            <button type="submit" id="btn_upd_vencimiento_comentario" name="btn_upd_vencimiento_comentario" value="{{ panel_pol_ajustado_dolar.id_poliza}}">Postergar Charla</button> 
+            
+            </td>
+        </tr>
+    </form>
+
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

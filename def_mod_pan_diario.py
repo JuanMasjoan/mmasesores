@@ -12,15 +12,19 @@ class Info_Panel_Diario:
        
         fecha_ajustado_dolar =  self.f.fechas_180_antes()
         valor_ajustado_dolar = (fecha_ajustado_dolar,)
+        fecha_refacturacion = self.f.fechas_30_dias()
+        valor_refacturacion = (fecha_refacturacion,)
+        
         succes,panel_pol_en_mora = self.e.select_sp('sp_panel_diario_1')
         succes2,panel_pol_avencer = self.e.select_sp('sp_panel_diario_2')
         succes3,panel_pol_vencida = self.e.select_sp('sp_panel_diario_3')
-        succes4,panel_pol_ajustado_dolar = self.e.select_sp('sp_panel_diario_4',valor_ajustado_dolar)
-
+        # succes4,panel_pol_ajustado_dolar = self.e.select_sp('sp_panel_diario_4',valor_ajustado_dolar)
+        succes5,panel_pol_refacturacion = self.e.select_sp('sp_polizas_refacturacion',valor_refacturacion)
         
-        if succes == succes2 == succes3 == succes4:
+   
+        if succes == succes2 == succes3 == succes5:
             succes_tabla_panel_cl = True
-            return succes_tabla_panel_cl, panel_pol_en_mora, panel_pol_avencer,panel_pol_vencida, panel_pol_ajustado_dolar
+            return succes_tabla_panel_cl, panel_pol_en_mora, panel_pol_avencer,panel_pol_vencida, panel_pol_refacturacion
         else:
             succes_tabla_panel_cl = False
             return succes_tabla_panel_cl,None,None,None, None
@@ -56,7 +60,7 @@ class Info_Panel_Diario:
     def up_pol_renovada (self,):
         
             campos_formulario = ['num_pol_nuev','id_productor','id_dni','id_cia','id_ramo','descrip',
-                                 'fecha_baja','refacturacion','id_forma_pago_clientes','cbu_tc',
+                                 'fecha_baja','fecha_baja_pol_renovada','refacturacion','id_forma_pago_clientes','cbu_tc',
                                  'cantidad_cuotas','id_ciclo_facturacion','prima','valor_estado',
                                  'id_dni','num_pol_vieja','sa_ajustado_dolar','poliza_renov']                 
 
@@ -66,35 +70,21 @@ class Info_Panel_Diario:
             formulario.convertir_vacios()
              
             estado_pol_vieja = '4'
-            succes, resultado_fx =  self.upd_estado_polida(formulario.valores['num_pol_vieja'],estado_pol_vieja)
-           
-            if succes == False:
-                alerta_fx = False
-            else:    
-                if resultado_fx is not None:
-                    alerta_fx  = False
-                else:
-                    alerta_fx  = True
+            poliza_renovada = '1' 
             
-            fecha_baja_pol_renovada = self.f.fechas_365_dsp( formulario.valores['fecha_baja'])
-          
             valor_insert_1 = (formulario.valores['num_pol_nuev'], formulario.valores['id_productor'], 
                             formulario.valores['id_dni'],formulario.valores['id_cia'],
                             formulario.valores['id_ramo'],formulario.valores['descrip'],
-                            formulario.valores['fecha_baja'], fecha_baja_pol_renovada,
+                            formulario.valores['fecha_baja'], formulario.valores['fecha_baja_pol_renovada'],
                             formulario.valores['refacturacion'],formulario.valores['id_forma_pago_clientes'],
                             formulario.valores['cbu_tc'],formulario.valores['cantidad_cuotas'],
                             formulario.valores['id_ciclo_facturacion'],formulario.valores['prima'],
-                            formulario.valores['valor_estado'],formulario.valores['sa_ajustado_dolar'])
-            
-            success, error_msj = self.e.insert_sp('SP_ALTA_POLIZA',valor_insert_1)
+                            formulario.valores['valor_estado'],formulario.valores['sa_ajustado_dolar'],
+                            poliza_renovada,formulario.valores['num_pol_vieja'],estado_pol_vieja)
 
-            if success :
-                alerta_sp = True
-            else:
-                alerta_sp = False   
-            
-            return alerta_sp,  alerta_fx
+            success, error_msj = self.e.insert_sp('sp_alta_pol_renov',valor_insert_1)
+             
+            return success, error_msj
 
     def upd_contacto_cliente(self,):
         campos_formulario = ['fecha_ultimo_contacto','comentario_ajustado_dolar','btn_upd_comentarios']
@@ -106,7 +96,6 @@ class Info_Panel_Diario:
         values_insert = (formulario['fecha_ultimo_contacto'],formulario['comentario_ajustado_dolar']
                          ,formulario['btn_upd_comentarios'])
         
-        print (values_insert)
         succes, result_sp = self.e.select_sp('sp_mod_contacto_cliente',values_insert)
 
         if succes == True:
@@ -138,7 +127,23 @@ class Info_Panel_Diario:
         else:
             succes_tabla_panel_cl = False
             return succes_tabla_panel_cl,None
+    
+    def upd_fecha_refacturacion(self,):
         
+        campos_formulario = ['nva_fecha_refacturacion','nva_prima','btn_upd_fecha_refacturacion']
+        formulario = ManejarFormulariosPost(request.form, campos_formulario)
+        formulario.obtener_valores()
+
+        values_insert = (formulario.valores['btn_upd_fecha_refacturacion'],
+            formulario.valores['nva_fecha_refacturacion'] ,formulario.valores['nva_prima'])
+        
+        succes, result_fx = self.e.select_sp('sp_upd_fecha_refact',values_insert)
+        
+        return succes , result_fx
+        #succes, result_fx = self.e.select_sp('sp_mod_estado_poliza',values_insert)
+    
+    
+      
         
           
                     

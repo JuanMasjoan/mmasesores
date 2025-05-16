@@ -1,0 +1,62 @@
+
+{% extends 'base.html' %}
+
+{% block title %}SINIESTROS{% endblock %}
+
+{% block header %} 
+
+
+{% endblock %}
+
+{% block content %}
+<h1>Siniestros Pendientes de inspeccion</h1>
+<table>
+  <thead>
+    <tr>
+      <th> + </th>
+      <th>poliza</th>
+      <th>cia</th>
+      <th>ramo</th>
+      <th>cliente</th>
+      <th>descripcion</th>
+      <th>dni</th>
+      <th>Estado de siniestros</th>
+      <th>Comentarios del siniestro</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for poliza_mora in vw_mora %}
+    <tr>
+      <td>
+        <button onclick="toggleRow('row_{{ loop.index }}')">+</button>
+      </td>
+      <td>{{ poliza_mora.poliza }}</td>  
+      <td>{{ poliza_mora.cia }}</td>
+      <td>{{ poliza_mora.ramo }}</td>
+      <td>{{ poliza_mora.cliente }}</td>
+      <td>{{ poliza_mora.descripcion }}</td>
+      <td>{{ poliza_mora.dni }}</td>
+      <td>{{ poliza_mora.Baja }}</td>
+      <td>{{ poliza_mora.Estado }}</td>
+    </tr>
+    <form id="form1" method="POST">
+    <tr id="row_{{ loop.index }}" class="hidden-row">
+      <td colspan="9">
+        <select name="valor_estado" id="copito{{ loop.index }}">
+          <option value=""></option>
+            {% for valor in info_panel_diario %}
+              <option value="{{ valor.id_estado }}" >{{ valor.estado }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit" id="btn_cambio_estado" name="btn_cambio_estado" value="{{ poliza_mora.poliza}}">ACTUALIZAR </button>
+        <button type="submit" name="redirect_panel_clientes"  value="{{ poliza_mora.dni }}" >Ir a Panel Cliente</button>
+      </td>
+    </tr>
+    </form>
+    {% endfor %}
+  </tbody>
+</table>
+<br>
+</table>
+{% endblock %}
+    

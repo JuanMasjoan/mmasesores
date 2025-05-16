@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}PDF Cotizacion Automotor{% endblock %}
+
+{% block header %} 
+<style>
+    .cuadro {
+        border: 1px solid #000;
+        padding: 10px;
+        margin-bottom: 10px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+    
+
+<h2>Ingrese su información:</h2>
+    <form action="/generar_pdf" method="post">
+        Nombre:<br>
+        <input type="text" name="nombre"><br><br>
+        Edad:<br>
+        <input type="text" name="edad"><br><br>
+        Email:<br>
+        <input type="text" name="email"><br><br>
+        <input type="submit" value="Generar PDF">
+    </form>
+    
+{% endblock %}

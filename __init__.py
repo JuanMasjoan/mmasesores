@@ -29,7 +29,8 @@ def create_app():
     from . import pan_cl
     from . import pan_diario
     from . import contabilidad
-    
+    from . import pan_siniestro
+    from . import creador_pdf
     
     from . import flsk_sql3_1
 
@@ -39,7 +40,8 @@ def create_app():
     app.register_blueprint(flsk_sql3_1.bp)
     app.register_blueprint(pan_diario.bp)
     app.register_blueprint(contabilidad.bp)
-    
+    app.register_blueprint(pan_siniestro.bp)
+    app.register_blueprint(creador_pdf.bp)
     
     
 

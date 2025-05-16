@@ -59,6 +59,11 @@ class ManejoFechas:
 
         return date_actual_final 
 
+
+    def fecha_hoy_DDMM(self):
+        fecha_hoy_DDMM = self.fecha_actual.strftime('%d-%m')
+        return fecha_hoy_DDMM
+    
     def fechas_15_dias (self,):  
 
         date_15_dias = self.fecha_actual + datetime.timedelta(days=15)
@@ -243,7 +248,70 @@ class Insert_tabla:
                 print("segundoo Error en SELECT 1 o SELECT 2:", error)
                 self.db.rollback()
                 return (False, error_msj, None , None, None)                
+    
+    def select_sp_5_resultados(self, sp_name, *args):
+        if args is None:
+            try:
+                self.c.callproc(sp_name)
+
+                resultado1 = []
+                resultado2 = []
+                resultado3 = []
+                resultado4 = []
+                resultado5 = []  
+                
+                for result in self.c.stored_results():
+                    if not resultado1:
+                        resultado1.extend(result.fetchall())
+                    elif not resultado2:
+                        resultado2.extend(result.fetchall())
+                    elif not resultado3:
+                        resultado3.extend(result.fetchall())
+                    elif not resultado4: 
+                        resultado4.extend(result.fetchall())
+                    else:
+                        resultado5.extend(result.fetchall())  
+                    
+                return (True, resultado1, resultado2, resultado3, resultado4, resultado5)
+
+            except Exception as e:
+                error = f"{e}"
+                error_msj = Cons_gral.manejo_error(error)
+                print("primer Error en SELECT 1 o SELECT 2:", error)
+                self.db.rollback()
+                return (False, error_msj, None, None, None, None)
         
+        else:  
+            try:
+                self.c.callproc(sp_name, *args)
+
+                resultado1 = []
+                resultado2 = []
+                resultado3 = []
+                resultado4 = []
+                resultado5 = []  
+                
+                for result in self.c.stored_results():
+                    if not resultado1:
+                        resultado1.extend(result.fetchall())
+                    elif not resultado2:
+                        resultado2.extend(result.fetchall()) 
+                    elif not resultado3:
+                        resultado3.extend(result.fetchall()) 
+                    elif not resultado4:  
+                        resultado4.extend(result.fetchall())
+                    else:
+                        resultado5.extend(result.fetchall())  
+
+                return (True, resultado1, resultado2, resultado3, resultado4, resultado5)
+
+            except Exception as e:
+                error = f"{e}"
+                error_msj = Cons_gral.manejo_error(error)
+                print("segundo Error en SELECT 1 o SELECT 2:", error)
+                self.db.rollback()
+                return (False, error_msj, None, None, None, None)
+
     def select_sp_2_resultados(self,sp_name,*args):
     
         if args == None:

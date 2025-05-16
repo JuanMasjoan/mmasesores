@@ -121,8 +121,9 @@ def facturas_cia():
 def vista_de_cartera_x_ramo():
     selector = Insert_tabla()
     itinerador_contabilidad = Consultas_contabilida()
-    succes1,tabla_x_ramo,tabla_x_cia , info_cia,info_rama= selector.select_sp_4_resultados('sp_consulta_info_cantidad_polizas_ramo')
+    succes1,tabla_x_ramo,tabla_x_cia ,info_cia,info_rama, total_polizas= selector.select_sp_5_resultados('sp_consulta_info_cantidad_polizas_ramo')
 
+   
     if succes1 == True:
         
         if request.method == 'POST':
@@ -131,11 +132,11 @@ def vista_de_cartera_x_ramo():
             return render_template('todo/contabilidad/vista_de_cartera_x_ramo.html', info_cia=info_cia,
                                     info_rama = info_rama, tabla_x_ramo= tabla_x_ramo, 
                                     tabla_x_cia = tabla_x_cia, count_elementos = count_elementos,
-                                    elementos = elementos)
+                                    elementos = elementos, total_polizas = total_polizas)
             
         return render_template('todo/contabilidad/vista_de_cartera_x_ramo.html', info_cia=info_cia,
                                 info_rama = info_rama, tabla_x_ramo= tabla_x_ramo, 
-                                tabla_x_cia = tabla_x_cia)
+                                tabla_x_cia = tabla_x_cia, total_polizas = total_polizas)
     
     else:
         flash('Error para cargar la pagina')

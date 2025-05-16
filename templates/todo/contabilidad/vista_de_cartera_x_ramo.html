@@ -9,6 +9,9 @@
 
 {% block content %} 
 <body>
+    {% for total_polizas in total_polizas %}
+        <th>{{total_polizas}}</th>
+    {% endfor %}
     <table class="tabla_comparativa" id="tabla1" border="1" >
         <h1>Estado de Cartera Por cia</h1>
         <tr>
@@ -23,6 +26,7 @@
         {% endfor %}
     </table>
     </br>
+</br>
     <table class="tabla_comparativa"  border="1">
         <h1>Estado de Cartera Por Ramo</h1>
         <tr>

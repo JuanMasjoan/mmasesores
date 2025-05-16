@@ -15,12 +15,10 @@ bp = Blueprint('pan_diario', __name__)
 @login_required
 def pan_diario():
     itinerador_ = Info_Panel_Diario()
-    succes_tabla_panel_diario, panel_pol_en_mora, panel_pol_avencer,panel_pol_vencida, panel_pol_ajustado_dolar = itinerador_.tablas_panel_diario()
+    succes_tabla_panel_diario, panel_pol_en_mora, panel_pol_avencer,panel_pol_vencida, panel_pol_refacturacion = itinerador_.tablas_panel_diario()
     succes_tabla_panel_cl, info_panel_diario = itinerador_.info_panel_diario()
     
 
-      
-    
     if succes_tabla_panel_diario == False:
         alerta = 'Error al Actualizar Panel Diario'
         flash(alerta)
@@ -57,8 +55,15 @@ def pan_diario():
 
         if 'btn_renovacion' in request.form:
             
-            alerta_1 , alerta_2 = itinerador_.up_pol_renovada()
+            success , resultado = itinerador_.up_pol_renovada()
+            print (success)
+            print (resultado)
             
+            if success == True:
+                for respuesta in resultado:
+                    funcion = respuesta['funcion']
+                    flash(funcion)
+              
         if 'redirect_panel_clientes' in request.form:
             campos_formulario = ['redirect_panel_clientes',]
             
@@ -74,13 +79,23 @@ def pan_diario():
         
         if 'btn_upd_vencimiento_comentario' in request.form:
             itinerador_.upd_contacto_cliente_vencimiento()
+           
+        if 'btn_upd_fecha_refacturacion' in request.form:  
+            
+            success, resultado = itinerador_.upd_fecha_refacturacion()
+            
+            resultado_primero = resultado[0]['resultado']
+            resultado_segundo = resultado[1]['resultado']
             
             
-        
+            if resultado_primero == 'REALIZADO' and resultado_segundo == 'REALIZADO':
+                flash('REALIZADO')
+            else:
+                flash('NO REALIZADO')
+                    
         return  redirect (url_for('pan_diario.pan_diario'))
-
 
     return render_template('todo/paneles/pan_diario.html', vw_mora = panel_pol_en_mora,
                             tabla_renovaciones = panel_pol_vencida,info_panel_diario = info_panel_diario,
-                            tabla_a_renovaciones = panel_pol_avencer, panel_pol_ajustado_dolar = panel_pol_ajustado_dolar)
+                            tabla_a_renovaciones = panel_pol_avencer, panel_pol_refacturacion = panel_pol_refacturacion)
 

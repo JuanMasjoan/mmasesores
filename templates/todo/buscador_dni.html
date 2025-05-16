@@ -83,7 +83,7 @@
                 </td>
             </tr>
         </form>
-    
+        
         <tr>
             <th> + </th>
             <th>APELLIDO Y NOMBRE </th>
@@ -92,6 +92,7 @@
             <th>REPRESENTANTE</th>
             <th> OBSERVACIONES</th>
         </tr>
+
     </thead>
     <tbody>
         {% for panel_cliente_info in tabla_cons_clientes_amostrar%}
@@ -106,7 +107,43 @@
         </tr>
         
         {% endfor %}
+        </form>
+    </tbody>
+    
+</table>
+
+<div style="margin:40px 0">
+
+<table>
+    <thead>
+        <tr> 
+            <th colspan="6" >
+              Próximos Cumpleaños
+            </th>
+          </tr>
+          <tr>
+            <th>DNI</th>
+            <th>NOMBRE Y APELLIDO</th>
+            <th>CUMPLEAÑOS</th>
+            <th>DÍAS PARA CUMPLE</th>
+            <th colspan="2"></th>  
+        </tr>
+    </thead>
+    <tbody>  
+        <tbody>
+            {% for panel_cumple in tabla_cumples%}
+            <form method= "POST">
+            <tr>
+                <td> <button  type="submit" name="panel_clientes" value="{{ panel_cumple.DNI }}" >Explorar</button></td>
+                <td>{{ panel_cumple.DNI }}</td>
+                <td>{{ panel_cumple.Nombre }}</td>
+                <td>{{ panel_cumple.Cumpleaños }}</td>
+   
+            </form>
+            </tr>
+            
+            {% endfor   %}
+        
     </tbody>
 </table>
-</form>
 {% endblock %}

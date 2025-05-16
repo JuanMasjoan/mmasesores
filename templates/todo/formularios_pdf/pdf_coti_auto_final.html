@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+
+{% block title %}PDF Cotizacion Automotor final{% endblock %}
+
+{% block header %} 
+<style>
+    .cuadro {
+        border: 1px solid #000;
+        padding: 10px;
+        margin-bottom: 10px;
+    }
+    img {
+        display: block;
+        margin: auto;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<p style="text-align: left;">&nbsp;</p>
+    
+<img src="{{ url_for('static', filename='Logo_Sin_fondo.png') }}" alt="Logo de MM ASesores">
+<h1>Texto Formateado</h1>
+<h3 style="text-align: center;"><strong>Cotizacion {{nombre}}</strong></h3>
+
+
+<blockquote>
+    <h2 style="text-align: left;"><strong>&iexcl;Gracias por confiar en nosotros!</strong></h2>
+</blockquote>
+
+<hr /><p style="text-align: justify;">{{nombre}} aca tienes la informaci&oacute;n detallada sobre las coberturas y los precios para el seguro de tu veh&iacute;culo. Te invitamos a analizar las diferencias que ofrecemos y si tienes alguna pregunta, no dudes en comunicarte con nosotros.</p>
+<p style="text-align: justify;">&nbsp;</p>
+
+
+
+<p style="text-align: justify;">&nbsp;</p>
+<h2><span style="text-decoration: underline;"><strong>Detalle de Cobertura</strong></span></h2>
+<table style="height: 546px; width: 100%; border-collapse: collapse; border-style: none;" border="0">
+<tbody>
+<tr style="height: 182px;">
+<td style="width: 50%; height: 182px;">
+<h4><span style="text-decoration: underline;"><strong>Responsabilidad Civil Limitada</strong></span></h4>
+Lesiones y/o Muerte de Terceras Personas<br />Transportadas y No Transportadas y Da&ntilde;os a Cosas<br />de Terceros No Transportados: Monto indicado, por<br />acontecimiento.</td>
+<td style="width: 50%; height: 182px;">
+<h4><span style="text-decoration: underline;"><strong>Incendio Total/Parcia</strong></span>l</h4>
+La compa&ntilde;&iacute;a indemnizar&aacute; al Asegurado los da&ntilde;os<br />materiales totales/Parciales que sufra el veh&iacute;culo objeto del<br />seguro, por la acci&oacute;n directa o indirecta del fuego,<br />explosi&oacute;n o rayo.</td>
+</tr>
+<tr style="height: 346px;">
+<td style="width: 50%; height: 346px;">
+<h4><span style="text-decoration: underline;"><strong>Robo y/o Hurto Total</strong></span></h4>
+En caso de Robo o Hurto Total del veh&iacute;culo<br />asegurado la Compa&ntilde;&iacute;a indemnizar&aacute; el valor de<br />venta al p&uacute;blico al contacto en plaza al momento del<br />siniestro de un veh&iacute;culo de igual marca, modelo y<br />caracter&iacute;sticas, haci&eacute;ndose cargo adem&aacute;s de los<br />impuestos, tasas, contribuciones y gastos inherentes<br />a la registraci&oacute;n del dominio a favor del Asegurado,<br />todo ello hasta la suma asegurada.</td>
+<td style="width: 50%; height: 346px;">
+<h4><span style="text-decoration: underline;">Robo y/o Hurto Parcial</span></h4>
+La compa&ntilde;&iacute;a indemnizar&aacute; o reemplazar&aacute; las cosas<br />robadas o hurtadas por otras de caracter&iacute;sticas y<br />estados similares hasta la suma asegurada. Se<br />encuentran excluidos los equipos de reproductores<br />de sonidos y/o similares, tazas de ruedas, tapas de<br />radiador, del tanque de combustible, escobillas y<br />brazos limpiaparabrisas, espejos e insignias<br />exteriores</td>
+</tr>
+<tr>
+<td style="width: 50%;">
+<h4><span style="text-decoration: underline;"><strong>Destruccion Total</strong></span></h4>
+<p>La compa&ntilde;&iacute;a indemnizar&aacute; el valor de venta al<br />p&uacute;blico al contacto en plaza al momento del<br />siniestro de un veh&iacute;culo de igual marca, modelo y<br />caracter&iacute;sticas, haci&eacute;ndose cargo adem&aacute;s de los<br />impuestos, tasas, contribuciones y gastos inherentes<br />a la registraci&oacute;n del dominio a favor del Asegurado,<br />todo ello hasta la suma asegurada.</p>
+<h4><strong>&nbsp;</strong></h4>
+</td>
+<td style="width: 50%;">
+<h4><span style="text-decoration: underline;">CLEAS</span></h4>
+<p>Cuando dos veh&iacute;culos asegurados chocan en compa&ntilde;&iacute;as adheridas al Sistema CLEAS, este sistema permite que el asegurado no responsable del accidente solicite a su propia compa&ntilde;&iacute;a encargarse de la reparaci&oacute;n del veh&iacute;culo y gestionar los tr&aacute;mites con la otra aseguradora. Esto aplica si los da&ntilde;os son &uacute;nicamente materiales y no exceden el l&iacute;mite establecido por la reglamentaci&oacute;n actual del sistema CLEAS. Adem&aacute;s, esta disposici&oacute;n es v&aacute;lida para veh&iacute;culos como autos, pick-ups, 4x4 o camiones con un peso bruto total de hasta 9 toneladas.</p>
+<p>&nbsp;</p>
+</td>
+</tr>
+<tr>
+<td style="width: 50%;">
+<h4><span style="text-decoration: underline;"><strong>Rotura de Cristales</strong></span></h4>
+<p>Incluye la reparaci&oacute;n y, de no ser factible, el cambio<br />de los cristales que resulten da&ntilde;ados o destru&iacute;dos<br />por cualquiera de los acontecimientos cubiertos por<br />la p&oacute;liza.</p>
+</td>
+<td style="width: 50%;">
+<h4><span style="text-decoration: underline;">Rotura de Cerraduras</span></h4>
+<p>Indemnizaci&oacute;n en caso de roturas de cerraduras<br />provocadas por robo o intento de robo</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+</td>
+</tr>
+<tr>
+<td style="width: 50%;">
+<h4>&nbsp;</h4>
+<h4><strong><span style="text-decoration: underline;">Accidente Parcial seg&uacute;n Deducible</span></strong></h4>
+La compa&ntilde;&iacute;a proceder&aacute; a reparar los da&ntilde;os por<br />accidentes causados a la unidad asegurada previa<br />deducci&oacute;n del importe convenido como deducible.</td>
+</tr>
+
+{% endblock %}

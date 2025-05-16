@@ -28,7 +28,7 @@ class Info_Panel_cl:
 
             return success_info_alta,info_productor, info_ramo, info_cia, info_form_pago_cl, info_ciclo_fact, info_estado_poliza 
         else:
-            print("No se encontraron suficientes separadores en los datos para dividir en  partes.")
+            print("Error al ejecutar funcion.")
             return success_info_alta,None, None , None, None , None, None
 
     def info_tabla_panel_cl(self,id_cliente):
@@ -64,7 +64,7 @@ class Info_Panel_cl:
 
             return success_info_alta,info_provincia, info_esrado_civil
         else:
-            print("No se encontraron suficientes separadores en los datos para dividir en  partes.")
+            print("Error ejecutar funcion")
             return success_info_alta,None, None 
 
     def separadores_info_stro(self,):
@@ -150,7 +150,6 @@ class DefMoDPanCl:
         
         
       
-        print (values_insert_alta_poliza)     
         success, error_msj = self.itinerador.insert_sp('SP_ALTA_POLIZA',values_insert_alta_poliza)
 
         if success :
